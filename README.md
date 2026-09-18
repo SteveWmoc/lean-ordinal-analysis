@@ -52,6 +52,8 @@ The early project deliberately does **not** attempt to formalize Gentzen's consi
 
 The notation systems should remain computational. In particular, comparison and normalization are defined on finite syntax and do not call out to abstract `Ordinal` comparison. The semantic interpretation into `Ordinal` certifies those algorithms.
 
+See [`docs/design.md`](docs/design.md) for the frozen initial ε₀ design.
+
 ## Status
 
-Bootstrap stage. The first development PR will freeze the ε₀ representation and project structure before implementing ordinal terms.
+PR #1 establishes the Lean/mathlib scaffold and the mathematical design for the ε₀ implementation. The next development slice introduces the raw term datatype.
