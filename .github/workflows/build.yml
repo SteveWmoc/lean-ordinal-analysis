@@ -9,6 +9,7 @@ on:
       - 'lean-toolchain'
       - 'lakefile.toml'
       - 'lake-manifest.json'
+      - '.github/workflows/build.yml'
   pull_request:
     branches:
       - main
@@ -17,6 +18,7 @@ on:
       - 'lean-toolchain'
       - 'lakefile.toml'
       - 'lake-manifest.json'
+      - '.github/workflows/build.yml'
   workflow_dispatch:
 
 concurrency:
