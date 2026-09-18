@@ -1,4 +1,4 @@
-name = "lean-ordinal-analysis"
+name = "leanOrdinalAnalysis"
 version = "0.1.0"
 defaultTargets = ["OrdinalAnalysis"]
 
