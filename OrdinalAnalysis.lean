@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.Term
+import OrdinalAnalysis.Epsilon0.Compare
