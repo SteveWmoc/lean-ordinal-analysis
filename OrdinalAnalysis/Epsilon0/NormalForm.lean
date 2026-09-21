@@ -43,8 +43,9 @@ def isNormal : E0Term → Bool
 def IsNormal (t : E0Term) : Prop :=
   t.isNormal = true
 
-instance instDecidableIsNormal (t : E0Term) : Decidable t.IsNormal :=
-  inferInstance
+instance instDecidableIsNormal (t : E0Term) : Decidable t.IsNormal := by
+  unfold IsNormal
+  exact decEq t.isNormal true
 
 /--
 A simple noncanonical raw term, intended to look like `1 + ω`.
