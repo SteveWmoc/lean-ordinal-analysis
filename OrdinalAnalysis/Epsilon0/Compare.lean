@@ -3,8 +3,8 @@ import OrdinalAnalysis.Epsilon0.Term
 /-!
 # Raw comparison for ε₀ terms
 
-This file defines the executable lexicographic comparison used by the ε₀
-notation system.
+This file exposes the executable structural comparison used by the ε₀ notation
+system.
 
 The comparison is purely syntactic.  It does not interpret terms as mathlib
 ordinals and it does not assume that the inputs are in Cantor normal form.
@@ -33,29 +33,20 @@ namespace E0Term
 /--
 Executable lexicographic comparison of raw ε₀ terms.
 
-This function is structural and independent of `Ordinal`.  Later we will
-prove that, on canonical terms, it agrees with semantic ordinal comparison.
+This is the structural `Ord` comparison derived from `E0Term`.  Its
+transitivity and equality behavior are certified by the accompanying
+`Std.TransOrd` and `Std.LawfulEqOrd` instances.  Later we will prove that,
+on canonical terms, it agrees with semantic ordinal comparison.
 -/
-def compareRaw : E0Term → E0Term → Ordering
-  | .zero, .zero => .eq
-  | .zero, .cnf _ _ _ => .lt
-  | .cnf _ _ _, .zero => .gt
-  | .cnf exp coeff tail, .cnf exp' coeff' tail' =>
-      match compareRaw exp exp' with
-      | .lt => .lt
-      | .gt => .gt
-      | .eq =>
-          match compare coeff coeff' with
-          | .lt => .lt
-          | .gt => .gt
-          | .eq => compareRaw tail tail'
+def compareRaw (a b : E0Term) : Ordering :=
+  compare a b
 
 /--
 The proposition that one raw ε₀ term is syntactically smaller than another.
 
 We deliberately do not install this as the global `LT E0Term` instance:
-the raw datatype contains noncanonical terms.  The eventual canonical subtype
-will receive the notation-system order.
+the raw datatype contains noncanonical terms.  The canonical subtype receives
+the actual notation-system order.
 -/
 def RawLT (a b : E0Term) : Prop :=
   compareRaw a b = .lt
