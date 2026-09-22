@@ -1,4 +1,5 @@
 import OrdinalAnalysis.Basic
+import Mathlib.Order.Std
 
 /-!
 # Raw ε₀ terms
@@ -30,11 +31,17 @@ Raw finite syntax for Cantor-normal-form expressions below ε₀.
 
 The datatype deliberately admits noncanonical terms.  Canonicality will be a
 separate predicate in the next layer of the development.
+
+Its `Ord` instance is the standard structural lexicographic comparison:
+constructors are ordered as written, and fields of `cnf` are compared in the
+order `exp`, `coeff`, `tail`.  The accompanying standard-library law
+instances certify transitivity and agreement of comparison equality with
+propositional equality, without installing `<` or `≤` on raw terms.
 -/
 inductive E0Term where
   | zero : E0Term
   | cnf (exp : E0Term) (coeff : Nat) (tail : E0Term) : E0Term
-deriving DecidableEq, Repr
+deriving DecidableEq, Repr, Ord, Std.TransOrd, Std.LawfulEqOrd
 
 namespace E0Term
 
