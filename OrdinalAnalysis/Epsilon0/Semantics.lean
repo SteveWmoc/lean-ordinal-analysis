@@ -33,7 +33,7 @@ is interpreted as
 Recall that the stored natural coefficient is one less than the represented
 positive coefficient.
 -/
-def eval : E0Term → Ordinal
+noncomputable def eval : E0Term → Ordinal
   | .zero => 0
   | .cnf exp coeff tail =>
       Ordinal.omega0 ^ eval exp * (coeff.succ : Ordinal) + eval tail
@@ -62,7 +62,7 @@ Interpret a canonical ε₀ notation as an ordinal.
 Canonicality is not needed to define the map; it becomes essential when we
 prove injectivity, comparison correctness, and the exact range below ε₀.
 -/
-def eval (a : E0) : Ordinal :=
+noncomputable def eval (a : E0) : Ordinal :=
   E0Term.eval a.1
 
 @[simp]
