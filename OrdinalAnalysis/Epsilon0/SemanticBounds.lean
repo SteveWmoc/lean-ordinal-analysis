@@ -40,9 +40,11 @@ theorem eval_cnf_lt_opow_of_tail_lt
     (hexp : eval exp < x) :
     eval (.cnf exp coeff tail) < Ordinal.omega0 ^ x := by
   rw [eval_cnf]
+  have hcoeff :
+      (coeff.succ : Ordinal) < (Ordinal.omega0 : Ordinal) :=
+    Ordinal.natCast_lt_omega0 coeff.succ
   exact
-    Ordinal.opow_mul_add_lt_opow
-      (Ordinal.natCast_lt_omega0 coeff.succ) htail hexp
+    Ordinal.opow_mul_add_lt_opow hcoeff htail hexp
 
 /--
 A convenient successor-exponent specialization of
