@@ -25,7 +25,8 @@ theorem eval_cnf_pos (exp : E0Term) (coeff : Nat) (tail : E0Term) :
 
 /-- The leading Cantor block is bounded above by the value of the whole node. -/
 theorem leadingBlock_le_eval (exp : E0Term) (coeff : Nat) (tail : E0Term) :
-    Ordinal.omega0 ^ eval exp * (coeff.succ : Ordinal) ≤
+    (Ordinal.omega0 : Ordinal.{0}) ^ eval exp *
+        (coeff.succ : Ordinal.{0}) ≤
       eval (.cnf exp coeff tail) := by
   rw [eval_cnf]
   exact le_self_add
@@ -35,16 +36,17 @@ If the tail is below the leading power of `ω`, then the whole CNF node is
 below any strictly larger power of `ω`.
 -/
 theorem eval_cnf_lt_opow_of_tail_lt
-    {exp tail : E0Term} (coeff : Nat) {x : Ordinal}
-    (htail : eval tail < Ordinal.omega0 ^ eval exp)
+    {exp tail : E0Term} (coeff : Nat) {x : Ordinal.{0}}
+    (htail :
+      eval tail < (Ordinal.omega0 : Ordinal.{0}) ^ eval exp)
     (hexp : eval exp < x) :
-    eval (.cnf exp coeff tail) < Ordinal.omega0 ^ x := by
+    eval (.cnf exp coeff tail) <
+      (Ordinal.omega0 : Ordinal.{0}) ^ x := by
   rw [eval_cnf]
   have hcoeff :
-      (coeff.succ : Ordinal) < (Ordinal.omega0 : Ordinal) :=
+      (coeff.succ : Ordinal.{0}) < (Ordinal.omega0 : Ordinal.{0}) :=
     Ordinal.natCast_lt_omega0 coeff.succ
-  exact
-    Ordinal.opow_mul_add_lt_opow hcoeff htail hexp
+  exact Ordinal.opow_mul_add_lt_opow hcoeff htail hexp
 
 /--
 A convenient successor-exponent specialization of
@@ -52,9 +54,10 @@ A convenient successor-exponent specialization of
 -/
 theorem eval_cnf_lt_nextPower_of_tail_lt
     {exp tail : E0Term} (coeff : Nat)
-    (htail : eval tail < Ordinal.omega0 ^ eval exp) :
+    (htail :
+      eval tail < (Ordinal.omega0 : Ordinal.{0}) ^ eval exp) :
     eval (.cnf exp coeff tail) <
-      Ordinal.omega0 ^ (eval exp + 1) := by
+      (Ordinal.omega0 : Ordinal.{0}) ^ (eval exp + 1) := by
   exact eval_cnf_lt_opow_of_tail_lt coeff htail (lt_add_one _)
 
 end E0Term
