@@ -50,6 +50,83 @@ def compareRaw : E0Term → E0Term → Ordering
           | .gt => .gt
           | .eq => compareRaw tail tail'
 
+/-- Raw comparison is reflexive at `Ordering.eq`. -/
+@[simp]
+theorem compareRaw_self : ∀ a : E0Term, compareRaw a a = .eq
+  | .zero => rfl
+  | .cnf exp coeff tail => by
+      rw [compareRaw, compareRaw_self exp]
+      have hcoeff : compare coeff coeff = .eq :=
+        Nat.compare_eq_eq.mpr rfl
+      rw [hcoeff]
+      exact compareRaw_self tail
+
+/--
+Raw comparison returns `Ordering.eq` exactly for syntactically equal terms.
+
+This is a purely syntactic certification lemma.  It does not require
+canonicality or ordinal semantics.
+-/
+@[simp]
+theorem compareRaw_eq_eq_iff : ∀ a b : E0Term, compareRaw a b = .eq ↔ a = b := by
+  intro a
+  induction a with
+  | zero =>
+      intro b
+      cases b <;> simp [compareRaw]
+  | cnf exp coeff tail ihExp ihTail =>
+      intro b
+      cases b with
+      | zero =>
+          simp [compareRaw]
+      | cnf exp' coeff' tail' =>
+          rw [compareRaw]
+          cases hExp : compareRaw exp exp' with
+          | lt =>
+              have hne : exp ≠ exp' := by
+                intro he
+                have heq : compareRaw exp exp' = .eq :=
+                  (ihExp exp').2 he
+                rw [hExp] at heq
+                contradiction
+              simp [hExp, hne]
+          | gt =>
+              have hne : exp ≠ exp' := by
+                intro he
+                have heq : compareRaw exp exp' = .eq :=
+                  (ihExp exp').2 he
+                rw [hExp] at heq
+                contradiction
+              simp [hExp, hne]
+          | eq =>
+              have he : exp = exp' :=
+                (ihExp exp').1 hExp
+              subst exp'
+              cases hCoeff : compare coeff coeff' with
+              | lt =>
+                  have hne : coeff ≠ coeff' := by
+                    intro hc
+                    subst coeff'
+                    have heq : compare coeff coeff = .eq :=
+                      Nat.compare_eq_eq.mpr rfl
+                    rw [heq] at hCoeff
+                    contradiction
+                  simp [hExp, hCoeff, hne]
+              | gt =>
+                  have hne : coeff ≠ coeff' := by
+                    intro hc
+                    subst coeff'
+                    have heq : compare coeff coeff = .eq :=
+                      Nat.compare_eq_eq.mpr rfl
+                    rw [heq] at hCoeff
+                    contradiction
+                  simp [hExp, hCoeff, hne]
+              | eq =>
+                  have hc : coeff = coeff' :=
+                    Nat.compare_eq_eq.mp hCoeff
+                  subst coeff'
+                  simp [hExp, hCoeff, ihTail]
+
 /--
 The proposition that one raw ε₀ term is syntactically smaller than another.
 
@@ -63,6 +140,10 @@ def RawLT (a b : E0Term) : Prop :=
 /-- Boolean form of raw syntactic strict comparison. -/
 def rawLT (a b : E0Term) : Bool :=
   compareRaw a b == .lt
+
+@[simp]
+theorem not_rawLT_self (a : E0Term) : ¬ RawLT a a := by
+  simp [RawLT]
 
 example : compareRaw E0Term.zero E0Term.zero = .eq := rfl
 example : compareRaw E0Term.zero E0Term.one = .lt := rfl
