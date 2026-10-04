@@ -180,6 +180,7 @@ theorem rawLT_cnf_iff
         have heq : compareRaw exp exp' = .eq :=
           (compareRaw_eq_eq_iff exp exp').2 he
         rw [hExp] at heq
+        contradiction
       simp [RawLT, compareRaw, hExp, hne]
   | eq =>
       have he : exp = exp' :=
