@@ -71,7 +71,7 @@ theorem isNormal_cnf_iff (exp : E0Term) (coeff : Nat) (tail : E0Term) :
   | zero =>
       simp [IsNormal, isNormal]
   | cnf tailExp tailCoeff tailTail =>
-      simp [IsNormal, isNormal, RawLT, and_assoc]
+      simp [IsNormal, isNormal, rawLT, RawLT, and_assoc]
 
 /-- A CNF node with zero tail is normal exactly when its exponent is normal. -/
 @[simp]
