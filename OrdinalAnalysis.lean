@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.SemanticBounds
+import OrdinalAnalysis.Epsilon0.SemanticCompare
