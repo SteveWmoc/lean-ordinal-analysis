@@ -52,9 +52,9 @@ theorem eval_tail_lt_leadingPower_of_normal
           tailExp tailCoeff tailTail htailNormal
       exact
         eval_cnf_lt_opow_of_tail_lt tailCoeff hinner htailExpLt
-termination_by E0Term.nodeCount (E0Term.cnf exp coeff tail)
+termination_by sizeOf exp + sizeOf tail
 decreasing_by
-  all_goals simp [nodeCount] <;> omega
+  decreasing_tactic
 
 /--
 Strict raw comparison is semantically sound on normal ε₀ terms.
@@ -96,9 +96,9 @@ theorem rawLT_sound
                   eval tail < eval tail' :=
                 rawLT_sound tail tail' ha.tail hb.tail hTail
               exact eval_cnf_lt_of_tail_lt hTailSem
-termination_by a.nodeCount + b.nodeCount
+termination_by sizeOf a + sizeOf b
 decreasing_by
-  all_goals simp [nodeCount] <;> omega
+  decreasing_tactic
 
 end
 
