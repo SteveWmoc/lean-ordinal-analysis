@@ -68,7 +68,7 @@ theorem eval_cnf_lt_of_tail_lt
     eval (.cnf exp coeff tail) <
       eval (.cnf exp coeff tail') := by
   rw [eval_cnf, eval_cnf]
-  exact add_lt_add_left htail _
+  exact (add_lt_add_iff_left _).2 htail
 
 end E0Term
 end OrdinalAnalysis
