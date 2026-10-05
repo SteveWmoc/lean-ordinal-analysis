@@ -54,8 +54,9 @@ theorem eval_tail_lt_leadingPower_of_normal
         eval_cnf_lt_opow_of_tail_lt tailCoeff hinner htailExpLt
 termination_by sizeOf exp + sizeOf tail
 decreasing_by
-  simp_all
-  decreasing_tactic
+  subst_vars
+  simp
+  omega
 
 /--
 Strict raw comparison is semantically sound on normal ε₀ terms.
@@ -99,8 +100,9 @@ theorem rawLT_sound
               exact eval_cnf_lt_of_tail_lt hTailSem
 termination_by sizeOf a + sizeOf b
 decreasing_by
-  simp_all
-  decreasing_tactic
+  subst_vars
+  simp
+  omega
 
 end
 
