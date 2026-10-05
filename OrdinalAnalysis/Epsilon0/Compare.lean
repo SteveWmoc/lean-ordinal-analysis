@@ -145,6 +145,68 @@ def rawLT (a b : E0Term) : Bool :=
 theorem not_rawLT_self (a : E0Term) : ¬ RawLT a a := by
   simp [RawLT]
 
+/-- Zero is raw-smaller than every nonzero raw term. -/
+@[simp]
+theorem rawLT_zero_cnf (exp : E0Term) (coeff : Nat) (tail : E0Term) :
+    RawLT .zero (.cnf exp coeff tail) :=
+  rfl
+
+/-- No nonzero raw term is raw-smaller than zero. -/
+@[simp]
+theorem not_rawLT_cnf_zero (exp : E0Term) (coeff : Nat) (tail : E0Term) :
+    ¬ RawLT (.cnf exp coeff tail) .zero := by
+  simp [RawLT, compareRaw]
+
+/--
+Lexicographic characterization of strict raw comparison between two CNF nodes.
+
+A node is smaller precisely when its exponent is smaller, or the exponents are
+equal and its coefficient is smaller, or both exponent and coefficient are
+equal and its tail is smaller.
+-/
+theorem rawLT_cnf_iff
+    (exp exp' : E0Term) (coeff coeff' : Nat) (tail tail' : E0Term) :
+    RawLT (.cnf exp coeff tail) (.cnf exp' coeff' tail') ↔
+      RawLT exp exp' ∨
+      (exp = exp' ∧
+        (coeff < coeff' ∨
+          (coeff = coeff' ∧ RawLT tail tail'))) := by
+  cases hExp : compareRaw exp exp' with
+  | lt =>
+      simp [RawLT, compareRaw, hExp]
+  | gt =>
+      have hne : exp ≠ exp' := by
+        intro he
+        have heq : compareRaw exp exp' = .eq :=
+          (compareRaw_eq_eq_iff exp exp').2 he
+        rw [hExp] at heq
+        contradiction
+      simp [RawLT, compareRaw, hExp, hne]
+  | eq =>
+      have he : exp = exp' :=
+        (compareRaw_eq_eq_iff exp exp').1 hExp
+      subst exp'
+      cases hCoeff : compare coeff coeff' with
+      | lt =>
+          have hc : coeff < coeff' :=
+            Nat.compare_eq_lt.mp hCoeff
+          simp [RawLT, compareRaw, compareRaw_self, hCoeff, hc]
+      | gt =>
+          have hc : coeff' < coeff :=
+            Nat.compare_eq_gt.mp hCoeff
+          have hnotlt : ¬ coeff < coeff' :=
+            Nat.lt_asymm hc
+          have hne : coeff ≠ coeff' := by
+            intro heq
+            subst coeff'
+            exact (Nat.lt_irrefl coeff) hc
+          simp [RawLT, compareRaw, compareRaw_self, hCoeff, hnotlt, hne]
+      | eq =>
+          have hc : coeff = coeff' :=
+            Nat.compare_eq_eq.mp hCoeff
+          subst coeff'
+          simp [RawLT, compareRaw, compareRaw_self, hCoeff]
+
 example : compareRaw E0Term.zero E0Term.zero = .eq := rfl
 example : compareRaw E0Term.zero E0Term.one = .lt := rfl
 example : compareRaw E0Term.one E0Term.zero = .gt := rfl
