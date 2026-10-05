@@ -52,7 +52,7 @@ theorem eval_tail_lt_leadingPower_of_normal
           tailExp tailCoeff tailTail htailNormal
       exact
         eval_cnf_lt_opow_of_tail_lt tailCoeff hinner htailExpLt
-termination_by (.cnf exp coeff tail).nodeCount
+termination_by E0Term.nodeCount (E0Term.cnf exp coeff tail)
 decreasing_by
   all_goals simp [nodeCount] <;> omega
 
