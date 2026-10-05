@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.SemanticCompare
+import OrdinalAnalysis.Epsilon0.Correctness
