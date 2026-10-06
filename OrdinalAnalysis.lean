@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.Correctness
+import OrdinalAnalysis.Epsilon0.LinearOrder
