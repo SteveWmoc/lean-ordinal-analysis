@@ -128,6 +128,37 @@ theorem compareRaw_eq_eq_iff : ∀ a b : E0Term, compareRaw a b = .eq ↔ a = b 
                   simp [hExp, hCoeff, ihTail]
 
 /--
+Raw comparison is reversed by swapping its arguments.
+-/
+@[simp]
+theorem compareRaw_swap : ∀ a b : E0Term, (compareRaw a b).swap = compareRaw b a := by
+  intro a
+  induction a with
+  | zero =>
+      intro b
+      cases b <;> rfl
+  | cnf exp coeff tail ihExp ihTail =>
+      intro b
+      cases b with
+      | zero =>
+          rfl
+      | cnf exp' coeff' tail' =>
+          rw [compareRaw, compareRaw, ← ihExp exp', ← Nat.compare_swap coeff coeff']
+          cases hExp : compareRaw exp exp' with
+          | lt =>
+              simp [hExp, Ordering.swap]
+          | gt =>
+              simp [hExp, Ordering.swap]
+          | eq =>
+              cases hCoeff : compare coeff coeff' with
+              | lt =>
+                  simp [hExp, hCoeff, Ordering.swap]
+              | gt =>
+                  simp [hExp, hCoeff, Ordering.swap]
+              | eq =>
+                  simp [hExp, hCoeff, ihTail tail', Ordering.swap]
+
+/--
 The proposition that one raw ε₀ term is syntactically smaller than another.
 
 We deliberately do not install this as the global `LT E0Term` instance:
@@ -136,6 +167,13 @@ will receive the notation-system order.
 -/
 def RawLT (a b : E0Term) : Prop :=
   compareRaw a b = .lt
+
+/-- A raw `.gt` result is exactly strict raw comparison in the reverse direction. -/
+@[simp]
+theorem compareRaw_eq_gt_iff_reverse_rawLT (a b : E0Term) :
+    compareRaw a b = .gt ↔ RawLT b a := by
+  rw [RawLT, ← compareRaw_swap a b]
+  cases h : compareRaw a b <;> simp [h, Ordering.swap]
 
 /-- Boolean form of raw syntactic strict comparison. -/
 def rawLT (a b : E0Term) : Bool :=
