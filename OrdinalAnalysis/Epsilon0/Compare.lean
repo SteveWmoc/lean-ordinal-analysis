@@ -156,7 +156,7 @@ theorem compareRaw_swap : ∀ a b : E0Term, (compareRaw a b).swap = compareRaw b
               | gt =>
                   simp [hExp, hCoeff, Ordering.swap]
               | eq =>
-                  simp [hExp, hCoeff, ihTail tail', Ordering.swap]
+                  exact ihTail tail'
 
 /--
 The proposition that one raw ε₀ term is syntactically smaller than another.
