@@ -96,7 +96,49 @@ theorem rawLT_sound
               exact eval_cnf_lt_of_tail_lt hTailSem
 termination_by structural a
 
+/--
+Strict semantic comparison of normal ε₀ terms is detected by the raw comparator.
+-/
+theorem rawLT_complete
+    (a b : E0Term)
+    (ha : IsNormal a) (hb : IsNormal b)
+    (hsem : eval a < eval b) :
+    RawLT a b := by
+  cases hcmp : compareRaw a b with
+  | lt =>
+      exact hcmp
+  | eq =>
+      have hab : a = b :=
+        (compareRaw_eq_eq_iff a b).1 hcmp
+      subst b
+      exact False.elim ((lt_irrefl _) hsem)
+  | gt =>
+      have hrev : RawLT b a :=
+        (compareRaw_eq_gt_iff_reverse_rawLT a b).1 hcmp
+      have hrevSem : eval b < eval a :=
+        rawLT_sound b a hb ha hrev
+      exact False.elim ((lt_asymm hsem) hrevSem)
+
+/-- On normal raw terms, syntactic and semantic strict comparison agree. -/
+theorem rawLT_iff_eval_lt
+    (a b : E0Term)
+    (ha : IsNormal a) (hb : IsNormal b) :
+    RawLT a b ↔ eval a < eval b := by
+  constructor
+  · exact rawLT_sound a b ha hb
+  · exact rawLT_complete a b ha hb
+
 end
 
 end E0Term
+
+namespace E0
+
+/-- Canonical ε₀ order agrees exactly with ordinal comparison under evaluation. -/
+theorem lt_iff_eval_lt (a b : E0) :
+    a < b ↔ eval a < eval b := by
+  change E0Term.RawLT a.1 b.1 ↔ E0Term.eval a.1 < E0Term.eval b.1
+  exact E0Term.rawLT_iff_eval_lt a.1 b.1 a.2 b.2
+
+end E0
 end OrdinalAnalysis
