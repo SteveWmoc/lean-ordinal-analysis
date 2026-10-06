@@ -89,7 +89,7 @@ theorem compareRaw_eq_eq_iff : ∀ a b : E0Term, compareRaw a b = .eq ↔ a = b 
                   (ihExp exp').2 he
                 rw [hExp] at heq
                 contradiction
-              simp [hExp, hne]
+              simp [hne]
           | gt =>
               have hne : exp ≠ exp' := by
                 intro he
@@ -97,7 +97,7 @@ theorem compareRaw_eq_eq_iff : ∀ a b : E0Term, compareRaw a b = .eq ↔ a = b 
                   (ihExp exp').2 he
                 rw [hExp] at heq
                 contradiction
-              simp [hExp, hne]
+              simp [hne]
           | eq =>
               have he : exp = exp' :=
                 (ihExp exp').1 hExp
@@ -111,7 +111,7 @@ theorem compareRaw_eq_eq_iff : ∀ a b : E0Term, compareRaw a b = .eq ↔ a = b 
                       Nat.compare_eq_eq.mpr rfl
                     rw [heq] at hCoeff
                     contradiction
-                  simp [hExp, hCoeff, hne]
+                  simp [hne]
               | gt =>
                   have hne : coeff ≠ coeff' := by
                     intro hc
@@ -120,12 +120,12 @@ theorem compareRaw_eq_eq_iff : ∀ a b : E0Term, compareRaw a b = .eq ↔ a = b 
                       Nat.compare_eq_eq.mpr rfl
                     rw [heq] at hCoeff
                     contradiction
-                  simp [hExp, hCoeff, hne]
+                  simp [hne]
               | eq =>
                   have hc : coeff = coeff' :=
                     Nat.compare_eq_eq.mp hCoeff
                   subst coeff'
-                  simp [hExp, hCoeff, ihTail]
+                  simp [ihTail]
 
 /--
 Raw comparison is reversed by swapping its arguments.
@@ -146,15 +146,15 @@ theorem compareRaw_swap : ∀ a b : E0Term, (compareRaw a b).swap = compareRaw b
           rw [compareRaw, compareRaw, ← ihExp exp', ← Nat.compare_swap coeff coeff']
           cases hExp : compareRaw exp exp' with
           | lt =>
-              simp [hExp, Ordering.swap]
+              simp [Ordering.swap]
           | gt =>
-              simp [hExp, Ordering.swap]
+              simp [Ordering.swap]
           | eq =>
               cases hCoeff : compare coeff coeff' with
               | lt =>
-                  simp [hExp, hCoeff, Ordering.swap]
+                  simp [Ordering.swap]
               | gt =>
-                  simp [hExp, hCoeff, Ordering.swap]
+                  simp [Ordering.swap]
               | eq =>
                   exact ihTail tail'
 
@@ -173,7 +173,7 @@ def RawLT (a b : E0Term) : Prop :=
 theorem compareRaw_eq_gt_iff_reverse_rawLT (a b : E0Term) :
     compareRaw a b = .gt ↔ RawLT b a := by
   rw [RawLT, ← compareRaw_swap a b]
-  cases h : compareRaw a b <;> simp [h, Ordering.swap]
+  cases compareRaw a b <;> simp [Ordering.swap]
 
 /-- Boolean form of raw syntactic strict comparison. -/
 def rawLT (a b : E0Term) : Bool :=
@@ -243,7 +243,7 @@ theorem rawLT_cnf_iff
           have hc : coeff = coeff' :=
             Nat.compare_eq_eq.mp hCoeff
           subst coeff'
-          simp [RawLT, compareRaw, compareRaw_self, hCoeff]
+          simp [RawLT, compareRaw, compareRaw_self]
 
 example : compareRaw E0Term.zero E0Term.zero = .eq := rfl
 example : compareRaw E0Term.zero E0Term.one = .lt := rfl

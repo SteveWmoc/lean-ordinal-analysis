@@ -33,8 +33,6 @@ noncomputable instance instPreorder : Preorder E0 where
   le_trans := fun _ _ _ hab hbc => le_trans hab hbc
   lt_iff_le_not_ge := by
     intro a b
-    change E0Term.RawLT a.1 b.1 ↔
-      eval a ≤ eval b ∧ ¬ eval b ≤ eval a
     rw [E0Term.rawLT_iff_eval_lt a.1 b.1 a.2 b.2]
     exact lt_iff_le_not_ge
 
@@ -63,7 +61,6 @@ noncomputable instance instLinearOrder : LinearOrder E0 :=
     compareRaw_compares
 
 /-- Canonical non-strict comparison agrees with ordinal comparison under evaluation. -/
-@[simp]
 theorem le_iff_eval_le (a b : E0) :
     a ≤ b ↔ eval a ≤ eval b :=
   Iff.rfl
