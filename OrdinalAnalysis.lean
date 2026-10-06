@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.LinearOrder
+import OrdinalAnalysis.Epsilon0.OrderEmbedding
