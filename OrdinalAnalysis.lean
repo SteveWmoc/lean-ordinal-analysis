@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.MathlibBridge
+import OrdinalAnalysis.Epsilon0.CanonicalBridge
