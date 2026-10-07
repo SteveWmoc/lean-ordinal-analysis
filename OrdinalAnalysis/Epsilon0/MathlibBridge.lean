@@ -90,6 +90,7 @@ theorem cmp_toONote : ∀ a b : E0Term,
           rfl
       | cnf exp' coeff' tail' =>
           simp only [toONote, ONote.cmp, ihExp exp', Nat.succPNat_coe]
+          rw [cmp_eq_compare coeff coeff']
           cases hExp : compareRaw exp exp' with
           | lt =>
               simp [compareRaw, hExp]
