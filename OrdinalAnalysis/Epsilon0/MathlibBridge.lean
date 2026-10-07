@@ -35,19 +35,21 @@ def toONote : E0Term → ONote
 def ofONote : ONote → E0Term
   | .zero => .zero
   | .oadd exp coeff tail =>
-      .cnf exp.ofONote coeff.natPred tail.ofONote
+      .cnf ofONote exp coeff.natPred ofONote tail
 
 @[simp]
-theorem ofONote_toONote : ∀ t : E0Term, t.toONote.ofONote = t
+theorem ofONote_toONote : ∀ t : E0Term, ofONote (toONote t) = t
   | .zero => rfl
   | .cnf exp coeff tail => by
-      simp [toONote, ofONote, ofONote_toONote exp, ofONote_toONote tail]
+      rw [toONote, ofONote, Nat.natPred_succPNat,
+        ofONote_toONote exp, ofONote_toONote tail]
 
 @[simp]
-theorem toONote_ofONote : ∀ o : ONote, o.ofONote.toONote = o
+theorem toONote_ofONote : ∀ o : ONote, toONote (ofONote o) = o
   | .zero => rfl
   | .oadd exp coeff tail => by
-      simp [toONote, ofONote, toONote_ofONote exp, toONote_ofONote tail]
+      rw [ofONote, toONote, PNat.succPNat_natPred,
+        toONote_ofONote exp, toONote_ofONote tail]
 
 /-- The raw syntax conversion is an equivalence of finite datatypes. -/
 def equivONote : E0Term ≃ ONote where
@@ -66,8 +68,8 @@ theorem repr_toONote : ∀ t : E0Term, ONote.repr t.toONote = eval t
 /-- The reverse raw conversion also preserves ordinal interpretation. -/
 @[simp]
 theorem eval_ofONote (o : ONote) :
-    eval o.ofONote = ONote.repr o := by
-  rw [← repr_toONote o.ofONote, toONote_ofONote]
+    eval (ofONote o) = ONote.repr o := by
+  rw [← repr_toONote (ofONote o), toONote_ofONote]
 
 /--
 Mathlib's executable raw comparator agrees with ours under the syntax
@@ -88,14 +90,25 @@ theorem cmp_toONote : ∀ a b : E0Term,
           rfl
       | cnf exp' coeff' tail' =>
           simp only [toONote, ONote.cmp, ihExp exp', Nat.succPNat_coe]
-          cases hExp : compareRaw exp exp' <;>
-            simp [compareRaw, hExp, ihTail tail']
+          cases hExp : compareRaw exp exp' with
+          | lt =>
+              simp [compareRaw, hExp]
+          | gt =>
+              simp [compareRaw, hExp]
+          | eq =>
+              cases hCoeff : compare coeff coeff' with
+              | lt =>
+                  simp [compareRaw, hExp, hCoeff]
+              | gt =>
+                  simp [compareRaw, hExp, hCoeff]
+              | eq =>
+                  simp [compareRaw, hExp, hCoeff, ihTail tail']
 
 /-- The reverse conversion likewise preserves executable raw comparison. -/
 @[simp]
 theorem compareRaw_ofONote (a b : ONote) :
-    compareRaw a.ofONote b.ofONote = ONote.cmp a b := by
-  rw [← cmp_toONote a.ofONote b.ofONote, toONote_ofONote, toONote_ofONote]
+    compareRaw (ofONote a) (ofONote b) = ONote.cmp a b := by
+  rw [← cmp_toONote (ofONote a) (ofONote b), toONote_ofONote, toONote_ofONote]
 
 end E0Term
 end OrdinalAnalysis
