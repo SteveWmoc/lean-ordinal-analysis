@@ -52,12 +52,13 @@ theorem isNormal_iff_nf_toONote : ∀ t : E0Term,
                 ONote.TopBelow exp.toONote
                   (toONote (.cnf tailExp tailCoeff tailTail)) := by
               simpa [ONote.TopBelow, toONote, RawLT] using h.tailExp_lt
-            letI : ONote.NF exp.toONote := hnfExp
             have hbelow :
                 ONote.NFBelow
                   (toONote (.cnf tailExp tailCoeff tailTail))
                   (ONote.repr exp.toONote) :=
-              (ONote.nfBelow_iff_topBelow).2 ⟨hnfTail, htop⟩
+              (@ONote.nfBelow_iff_topBelow exp.toONote hnfExp
+                (toONote (.cnf tailExp tailCoeff tailTail))).2
+                ⟨hnfTail, htop⟩
             exact ONote.NF.oadd hnfExp coeff.succPNat hbelow
           · intro h
             have hnfExp : ONote.NF exp.toONote :=
@@ -65,11 +66,11 @@ theorem isNormal_iff_nf_toONote : ∀ t : E0Term,
             have hnfTail :
                 ONote.NF (toONote (.cnf tailExp tailCoeff tailTail)) :=
               h.snd
-            letI : ONote.NF exp.toONote := hnfExp
             have htop :
                 ONote.TopBelow exp.toONote
                   (toONote (.cnf tailExp tailCoeff tailTail)) :=
-              (ONote.nfBelow_iff_topBelow).1 h.snd' |>.2
+              ((@ONote.nfBelow_iff_topBelow exp.toONote hnfExp
+                (toONote (.cnf tailExp tailCoeff tailTail))).1 h.snd').2
             have htailLt : RawLT tailExp exp := by
               simpa [ONote.TopBelow, toONote, RawLT] using htop
             exact
