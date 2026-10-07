@@ -35,7 +35,7 @@ def toONote : E0Term → ONote
 def ofONote : ONote → E0Term
   | .zero => .zero
   | .oadd exp coeff tail =>
-      .cnf ofONote exp coeff.natPred ofONote tail
+      .cnf (ofONote exp) coeff.natPred (ofONote tail)
 
 @[simp]
 theorem ofONote_toONote : ∀ t : E0Term, ofONote (toONote t) = t
