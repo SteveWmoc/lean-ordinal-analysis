@@ -35,3 +35,7 @@ First public ε₀ milestone.
 ### Scope
 
 Fundamental sequences are deliberately not part of v0.1.0. They begin the next development milestone.
+
+### License
+
+- Released under the MIT License.
