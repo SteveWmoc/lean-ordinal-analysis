@@ -1,0 +1,24 @@
+{
+  "title": "lean-ordinal-analysis: Verified executable ordinal notation below ε₀",
+  "upload_type": "software",
+  "version": "0.1.0",
+  "creators": [
+    {
+      "name": "Sabean, Steven",
+      "orcid": "0009-0009-9238-610X"
+    }
+  ],
+  "description": "Executable recursive ordinal notation systems in Lean 4. Version 0.1.0 provides a verified Cantor-normal-form notation system whose canonical terms represent exactly the ordinals below ε₀, together with executable comparison, semantic certification, mathlib ONote/NONote interoperability, and notation-level ordinal arithmetic.",
+  "keywords": [
+    "ordinal analysis",
+    "proof theory",
+    "epsilon zero",
+    "ordinal notation",
+    "Cantor normal form",
+    "Lean 4",
+    "mathlib",
+    "formal verification"
+  ],
+  "access_right": "open",
+  "license": "mit"
+}
