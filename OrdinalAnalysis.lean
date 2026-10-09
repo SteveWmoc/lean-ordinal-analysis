@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.Operations
+import OrdinalAnalysis.Epsilon0.FundamentalSequence
