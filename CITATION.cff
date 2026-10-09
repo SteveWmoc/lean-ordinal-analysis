@@ -7,6 +7,7 @@ authors:
     given-names: "Steven"
     orcid: "https://orcid.org/0009-0009-9238-610X"
 version: "0.1.0"
+license: "MIT"
 repository-code: "https://github.com/SteveWmoc/lean-ordinal-analysis"
 url: "https://github.com/SteveWmoc/lean-ordinal-analysis"
 abstract: >-
