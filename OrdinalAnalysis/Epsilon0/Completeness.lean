@@ -25,7 +25,7 @@ namespace E0
 open Ordinal
 
 /-- The finite tower `0, 1, ω, ω^ω, ...` used in the characterization of `ε₀`. -/
-private def omegaTower : Nat → Ordinal
+private noncomputable def omegaTower : Nat → Ordinal
   | 0 => 0
   | n + 1 => ω ^ omegaTower n
 
@@ -76,7 +76,9 @@ private theorem exists_nonote_repr_foldr
   induction l with
   | nil =>
       intro _ _
-      exact ⟨0, by simp [NONote.repr]⟩
+      refine ⟨0, ?_⟩
+      change ONote.repr 0 = 0
+      rfl
   | cons p l ih =>
       intro hexp hcoeff
       obtain ⟨e, he⟩ := hrep p.1 (hexp p (by simp))
@@ -88,7 +90,9 @@ private theorem exists_nonote_repr_foldr
       refine ⟨NONote.opow omegaNote e * NONote.ofNat n + tail, ?_⟩
       simp only [List.foldr_cons]
       rw [NONote.repr_add, NONote.repr_mul, NONote.repr_opow,
-        repr_omegaNote, NONote.repr_ofNat, he, htail, hn]
+        repr_omegaNote, he, htail, hn]
+      change _ * ONote.repr (ONote.ofNat n) + _ = _
+      rw [ONote.repr_ofNat]
 
 /--
 Every ordinal below the `n`th finite `ω)-tower has a canonical
@@ -99,16 +103,18 @@ private theorem exists_nonote_repr_below_omegaTower (n : Nat) :
   induction n with
   | zero =>
       intro α hα
-      have hnot : ¬ α < (0 : Ordinal) :=
-        not_lt_of_ge (zero_le α)
-      exact (hnot (by simpa using hα)).elim
+      exact
+        (not_lt_of_ge (bot_le : (0 : Ordinal) ≤ α)
+          (by simpa using hα)).elim
   | succ n ih =>
       intro α hα
       have hα' : α < ω ^ omegaTower n := by
         simpa using hα
       by_cases hzero : α = 0
       · subst α
-        exact ⟨0, by simp [NONote.repr]⟩
+        refine ⟨0, ?_⟩
+        change ONote.repr 0 = 0
+        rfl
       · have hlog : log ω α < omegaTower n :=
           (lt_opow_iff_log_lt one_lt_omega0 hzero).1 hα'
         have hexp :
@@ -148,7 +154,7 @@ private theorem exists_eval_lt_omegaTower
         E0Term.eval_cnf_lt_nextPower_of_tail_lt coeff htail
       have hsucc :
           E0Term.eval exp + 1 ≤ omegaTower n :=
-        succ_le_iff.2 hn
+        hn.succ_le
       have hopow :
           ω ^ (E0Term.eval exp + 1) ≤ ω ^ omegaTower n :=
         opow_le_opow_right omega0_pos hsucc
