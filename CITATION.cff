@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "lean-ordinal-analysis"
+type: software
+authors:
+  - family-names: "Sabean"
+    given-names: "Steven"
+    orcid: "https://orcid.org/0009-0009-9238-610X"
+version: "0.1.0"
+repository-code: "https://github.com/SteveWmoc/lean-ordinal-analysis"
+url: "https://github.com/SteveWmoc/lean-ordinal-analysis"
+abstract: >-
+  Executable recursive ordinal notation systems in Lean 4. Version 0.1.0
+  provides a verified Cantor-normal-form notation system whose canonical
+  terms represent exactly the ordinals below epsilon zero.
+keywords:
+  - "ordinal analysis"
+  - "proof theory"
+  - "epsilon zero"
+  - "ordinal notation"
+  - "Cantor normal form"
+  - "Lean 4"
+  - "mathlib"
+  - "formal verification"
