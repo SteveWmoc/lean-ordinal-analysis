@@ -24,8 +24,11 @@ Before creating the GitHub release:
 4. Confirm `lakefile.toml` pins mathlib `v4.34.1`.
 5. Confirm `lake-manifest.json` records the v4.34.1 mathlib commit.
 6. Confirm `lakefile.toml` still reports version `0.1.0`.
-7. Confirm `CITATION.cff` and `.zenodo.json` contain the intended creator metadata.
-8. If using Zenodo's GitHub integration, make sure this repository is enabled there before publishing the GitHub release.
+7. Confirm `LICENSE` is the MIT License and both `CITATION.cff` and `.zenodo.json` identify the software license as MIT.
+8. Confirm `CITATION.cff` and `.zenodo.json` contain the intended creator metadata.
+9. If using Zenodo's GitHub integration, make sure this repository is enabled there before publishing the GitHub release.
+
+The release is distributed under the MIT License. Zenodo's `.zenodo.json` uses the SPDX-style identifier `mit` so the open archive does not fall back to a Creative Commons license.
 
 No DOI is committed before the archive exists.
 
