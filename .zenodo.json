@@ -19,5 +19,6 @@
     "mathlib",
     "formal verification"
   ],
-  "access_right": "open"
+  "access_right": "open",
+  "license": "mit"
 }
