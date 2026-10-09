@@ -95,7 +95,7 @@ private theorem exists_nonote_repr_foldr
       rw [ONote.repr_ofNat]
 
 /--
-Every ordinal below the `n`th finite `ω)-tower has a canonical
+Every ordinal below the `n`th finite `ω`-tower has a canonical
 `NONote` representative.
 -/
 private theorem exists_nonote_repr_below_omegaTower (n : Nat) :
@@ -103,9 +103,8 @@ private theorem exists_nonote_repr_below_omegaTower (n : Nat) :
   induction n with
   | zero =>
       intro α hα
-      exact
-        (not_lt_of_ge (bot_le : (0 : Ordinal) ≤ α)
-          (by simpa using hα)).elim
+      simp only [omegaTower_zero] at hα
+      exact (not_lt_of_ge (bot_le : (0 : Ordinal) ≤ α) hα).elim
   | succ n ih =>
       intro α hα
       have hα' : α < ω ^ omegaTower n := by
@@ -131,7 +130,7 @@ private theorem exists_nonote_repr_below_omegaTower (n : Nat) :
         exact CNF.foldr ω α
 
 /--
-Every normal finite ε₀ term lies below some finite `ω)-tower.
+Every normal finite ε₀ term lies below some finite `ω`-tower.
 -/
 private theorem exists_eval_lt_omegaTower
     (t : E0Term) (h : t.IsNormal) :
