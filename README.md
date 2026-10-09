@@ -127,3 +127,7 @@ Citation metadata is provided in [`CITATION.cff`](CITATION.cff). Zenodo-specific
 The v0.1.0 release procedure, including the post-release DOI update, is documented in [`docs/release-v0.1.0.md`](docs/release-v0.1.0.md). The DOI is intentionally not hard-coded before Zenodo assigns it.
 
 See [`CHANGELOG.md`](CHANGELOG.md) for the release summary.
+
+## License
+
+This project is released under the [MIT License](LICENSE).
