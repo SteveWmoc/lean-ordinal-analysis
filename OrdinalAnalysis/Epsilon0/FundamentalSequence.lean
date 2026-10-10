@@ -26,7 +26,7 @@ The three possible outputs of the fundamental-sequence algorithm.
 -/
 inductive FundamentalSequenceResult where
   | zero
-  | succ (pred : E0)
+  | succ (predecessor : E0)
   | limit (seq : Nat → E0)
 
 /-- The semantic specification for a fundamental-sequence result. -/
@@ -34,8 +34,8 @@ def FundamentalSequenceResult.Satisfies
     (a : E0) : FundamentalSequenceResult → Prop
   | .zero =>
       eval a = 0
-  | .succ pred =>
-      eval a = Ordinal.succ (eval pred)
+  | .succ predecessor =>
+      eval a = Ordinal.succ (eval predecessor)
   | .limit seq =>
       IsSuccLimit (eval a) ∧
         (∀ i, seq i < seq (i + 1) ∧ seq i < a) ∧
@@ -66,11 +66,11 @@ def fundamentalSequenceData (a : E0) : FundamentalSequenceData a := by
           change ONote.repr o.1 = 0
           rw [hprop]
           exact ONote.repr_zero
-      | some pred =>
+      | some predecessor =>
           rw [hfs, ONote.FundamentalSequenceProp] at hprop
-          let pred' : NONote := ⟨pred, hprop.2 hnf⟩
-          refine ⟨.succ (ofNONote pred'), ?_⟩
-          rw [← repr_toNONote a, eval_ofNONote pred']
+          let predecessor' : NONote := ⟨predecessor, hprop.2 hnf⟩
+          refine ⟨.succ (ofNONote predecessor'), ?_⟩
+          rw [← repr_toNONote a, eval_ofNONote predecessor']
           exact hprop.1
   | inr seq =>
       rw [hfs, ONote.FundamentalSequenceProp] at hprop
