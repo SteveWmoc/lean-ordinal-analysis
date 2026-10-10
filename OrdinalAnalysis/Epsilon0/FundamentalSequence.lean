@@ -55,6 +55,8 @@ structure FundamentalSequenceData (a : E0) where
 def fundamentalSequenceData (a : E0) : FundamentalSequenceData a := by
   let o : NONote := toNONote a
   have hnf : ONote.NF o.1 := o.2
+  have heval : ONote.repr o.1 = eval a := by
+    simpa [o, NONote.repr] using repr_toNONote a
   have hprop := ONote.fundamentalSequence_has_prop o.1
   cases hfs : ONote.fundamentalSequence o.1 with
   | inl opt =>
@@ -62,42 +64,57 @@ def fundamentalSequenceData (a : E0) : FundamentalSequenceData a := by
       | none =>
           rw [hfs, ONote.FundamentalSequenceProp] at hprop
           refine ⟨.zero, ?_⟩
-          rw [← repr_toNONote a]
-          change ONote.repr o.1 = 0
-          rw [hprop]
-          exact ONote.repr_zero
+          change eval a = 0
+          calc
+            eval a = ONote.repr o.1 := heval.symm
+            _ = ONote.repr 0 := congrArg ONote.repr hprop
+            _ = 0 := ONote.repr_zero
       | some predecessor =>
           rw [hfs, ONote.FundamentalSequenceProp] at hprop
           let predecessor' : NONote := ⟨predecessor, hprop.2 hnf⟩
           refine ⟨.succ (ofNONote predecessor'), ?_⟩
-          rw [← repr_toNONote a, eval_ofNONote predecessor']
-          exact hprop.1
+          change eval a = Order.succ (eval (ofNONote predecessor'))
+          calc
+            eval a = ONote.repr o.1 := heval.symm
+            _ = Order.succ (ONote.repr predecessor) := hprop.1
+            _ = Order.succ (eval (ofNONote predecessor')) := by
+              simp [predecessor', eval_ofNONote, NONote.repr]
   | inr seq =>
       rw [hfs, ONote.FundamentalSequenceProp] at hprop
       let seq' : Nat → E0 := fun i =>
         ofNONote ⟨seq i, (hprop.2.1 i).2.2 hnf⟩
+      have hevalSeq (i : Nat) :
+          eval (seq' i) = ONote.repr (seq i) := by
+        simp [seq', eval_ofNONote, NONote.repr]
       refine ⟨.limit seq', ?_⟩
+      change
+        IsSuccLimit (eval a) ∧
+          (∀ i, seq' i < seq' (i + 1) ∧ seq' i < a) ∧
+          ∀ α, α < eval a → ∃ i, α < eval (seq' i)
       refine ⟨?_, ?_, ?_⟩
-      · rw [← repr_toNONote a]
-        exact hprop.1
+      · simpa [heval] using hprop.1
       · intro i
         constructor
         · apply (lt_iff_eval_lt _ _).2
-          change
-            ONote.repr (seq i) <
-              ONote.repr (seq (i + 1))
-          exact (ONote.lt_def).1 (hprop.2.1 i).1
+          calc
+            eval (seq' i) = ONote.repr (seq i) := hevalSeq i
+            _ < ONote.repr (seq (i + 1)) :=
+              (ONote.lt_def).1 (hprop.2.1 i).1
+            _ = eval (seq' (i + 1)) := (hevalSeq (i + 1)).symm
         · apply (lt_iff_eval_lt _ _).2
-          change ONote.repr (seq i) < eval a
-          rw [← repr_toNONote a]
-          exact (ONote.lt_def).1 (hprop.2.1 i).2.1
+          calc
+            eval (seq' i) = ONote.repr (seq i) := hevalSeq i
+            _ < ONote.repr o.1 :=
+              (ONote.lt_def).1 (hprop.2.1 i).2.1
+            _ = eval a := heval
       · intro α hα
         have hα' : α < ONote.repr o.1 := by
-          simpa [o, NONote.repr] using hα
+          simpa [heval] using hα
         obtain ⟨i, hi⟩ := hprop.2.2 α hα'
         refine ⟨i, ?_⟩
-        change α < ONote.repr (seq i)
-        exact hi
+        calc
+          α < ONote.repr (seq i) := hi
+          _ = eval (seq' i) := (hevalSeq i).symm
 
 /-- The executable fundamental-sequence classifier on canonical `E0`. -/
 def fundamentalSequence (a : E0) : FundamentalSequenceResult :=
