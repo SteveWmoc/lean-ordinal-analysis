@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.Completeness
+import OrdinalAnalysis.Epsilon0.FundamentalSequence
