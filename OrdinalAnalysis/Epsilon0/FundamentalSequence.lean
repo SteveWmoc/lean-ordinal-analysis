@@ -93,7 +93,7 @@ def fundamentalSequenceData (a : E0) : FundamentalSequenceData a := by
           eval (seq' i) = ONote.repr (seq i) := by
         calc
           eval (seq' i) = NONote.repr (seqNote i) := by
-            simpa [seq'] using eval_ofNONote (seqNote i)
+            simp [seq', eval_ofNONote]
           _ = ONote.repr (seq i) := rfl
       refine ⟨.limit seq', ?_⟩
       change
