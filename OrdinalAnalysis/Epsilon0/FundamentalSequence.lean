@@ -35,7 +35,7 @@ def FundamentalSequenceResult.Satisfies
   | .zero =>
       eval a = 0
   | .succ predecessor =>
-      eval a = Ordinal.succ (eval predecessor)
+      eval a = Order.succ (eval predecessor)
   | .limit seq =>
       IsSuccLimit (eval a) ∧
         (∀ i, seq i < seq (i + 1) ∧ seq i < a) ∧
