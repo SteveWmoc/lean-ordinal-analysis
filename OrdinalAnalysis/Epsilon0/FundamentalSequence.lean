@@ -72,20 +72,26 @@ def fundamentalSequenceData (a : E0) : FundamentalSequenceData a := by
       | some predecessor =>
           rw [hfs, ONote.FundamentalSequenceProp] at hprop
           let predecessor' : NONote := ⟨predecessor, hprop.2 hnf⟩
+          have hpredEval :
+              eval (ofNONote predecessor') = ONote.repr predecessor := by
+            rw [eval_ofNONote]
+            rfl
           refine ⟨.succ (ofNONote predecessor'), ?_⟩
           change eval a = Order.succ (eval (ofNONote predecessor'))
           calc
             eval a = ONote.repr o.1 := heval.symm
             _ = Order.succ (ONote.repr predecessor) := hprop.1
-            _ = Order.succ (eval (ofNONote predecessor')) := by
-              simp [predecessor', eval_ofNONote, NONote.repr]
+            _ = Order.succ (eval (ofNONote predecessor')) :=
+              congrArg Order.succ hpredEval.symm
   | inr seq =>
       rw [hfs, ONote.FundamentalSequenceProp] at hprop
       let seq' : Nat → E0 := fun i =>
         ofNONote ⟨seq i, (hprop.2.1 i).2.2 hnf⟩
       have hevalSeq (i : Nat) :
           eval (seq' i) = ONote.repr (seq i) := by
-        simp [seq', eval_ofNONote, NONote.repr]
+        dsimp [seq']
+        rw [eval_ofNONote]
+        rfl
       refine ⟨.limit seq', ?_⟩
       change
         IsSuccLimit (eval a) ∧
