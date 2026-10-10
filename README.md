@@ -1,6 +1,7 @@
 # lean-ordinal-analysis
 
 [![Build](https://github.com/SteveWmoc/lean-ordinal-analysis/actions/workflows/build.yml/badge.svg)](https://github.com/SteveWmoc/lean-ordinal-analysis/actions/workflows/build.yml)
+[![DOI](https://zenodo.org/badge/1376449795.svg)](https://doi.org/10.5281/zenodo.23272263)
 
 Executable recursive ordinal notation systems in Lean 4, with verified semantics and order types.
 
@@ -99,12 +100,16 @@ Complete. The canonical notation type has verified order type exactly ε₀, wit
 
 ### v0.2 - fundamental sequences
 
-Planned next:
+In development:
 
 - zero/successor/limit classification;
-- fundamental sequences for limit notations;
-- monotonicity and boundedness;
-- semantic cofinality/convergence.
+- canonical predecessor or fundamental-sequence output;
+- strictly increasing limit sequences;
+- boundedness below the represented notation;
+- semantic cofinality in the represented limit ordinal.
+
+The first v0.2 slice transports mathlib's verified `ONote.fundamentalSequence`
+construction through the canonical `E0 ≃o NONote` bridge.
 
 ### v0.3 - generic notation-system API
 
@@ -124,7 +129,7 @@ v0.1.0 does not formalize Gentzen's consistency proof, infinitary proof systems,
 
 Citation metadata is provided in [`CITATION.cff`](CITATION.cff). Zenodo-specific release metadata is provided in [`.zenodo.json`](.zenodo.json).
 
-The v0.1.0 release procedure, including the post-release DOI update, is documented in [`docs/release-v0.1.0.md`](docs/release-v0.1.0.md). The DOI is intentionally not hard-coded before Zenodo assigns it.
+The v0.1.0 release procedure is documented in [`docs/release-v0.1.0.md`](docs/release-v0.1.0.md). The archived release is available through the Zenodo DOI badge above.
 
 See [`CHANGELOG.md`](CHANGELOG.md) for the release summary.
 
