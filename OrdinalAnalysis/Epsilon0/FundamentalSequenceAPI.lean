@@ -33,8 +33,10 @@ theorem fundamentalSequence_eq_zero_eval
 theorem eq_zero_of_fundamentalSequence_eq_zero
     {a : E0} (h : fundamentalSequence a = .zero) :
     a = 0 := by
+  change a = E0.zero
   apply eval_injective
-  simpa using fundamentalSequence_eq_zero_eval h
+  rw [eval_zero]
+  exact fundamentalSequence_eq_zero_eval h
 
 /-- If the classifier returns a successor, the input has the advertised semantics. -/
 theorem fundamentalSequence_eq_succ_eval
