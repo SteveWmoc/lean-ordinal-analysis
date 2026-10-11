@@ -31,7 +31,7 @@ theorem fundamentalSequence_eq_limit_iSup_eval
   · apply le_of_not_gt
     intro hgap
     obtain ⟨i, hi⟩ := fundamentalSequence_eq_limit_cofinal h hgap
-    exact (Ordinal.le_iSup (fun i => eval (seq i)) i).not_lt hi
+    exact (not_lt_of_ge (Ordinal.le_iSup (fun i => eval (seq i)) i)) hi
 
 end E0
 end OrdinalAnalysis
