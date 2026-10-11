@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.FundamentalSequenceAPI
+import OrdinalAnalysis.Epsilon0.FundamentalSequenceConvergence
