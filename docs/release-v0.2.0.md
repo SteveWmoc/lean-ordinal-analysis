@@ -63,7 +63,8 @@ Version 0.2.0 extends the verified executable ε₀ notation system with fundame
 - semantic cofinality below the represented limit ordinal;
 - exact convergence:
   ```lean
-  E0.fundamentalSequence_eq_limit_iSup_eval :
+  E0.fundamentalSequence_eq_limit_iSup_eval
+      (h : E0.fundamentalSequence a = .limit seq) :
     (⨆ i, E0.eval (seq i)) = E0.eval a
   ```
 - certified `E0.LimitFundamentalSequenceData`;
