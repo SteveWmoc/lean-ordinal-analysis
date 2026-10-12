@@ -16,7 +16,8 @@ Fundamental-sequence milestone for the verified ε₀ notation system.
 - Semantic cofinality below the represented limit ordinal.
 - Exact convergence theorem
   ```lean
-  E0.fundamentalSequence_eq_limit_iSup_eval :
+  E0.fundamentalSequence_eq_limit_iSup_eval
+      (h : E0.fundamentalSequence a = .limit seq) :
     (⨆ i, E0.eval (seq i)) = E0.eval a
   ```
   for a limit-classifier result.
