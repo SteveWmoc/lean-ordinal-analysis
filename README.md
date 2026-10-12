@@ -34,12 +34,13 @@ The ε₀ development includes:
 - semantic cofinality below the represented limit ordinal;
 - convergence of semantic values:
   ```lean
-  E0.fundamentalSequence_eq_limit_iSup_eval :
+  E0.fundamentalSequence_eq_limit_iSup_eval
+      (h : E0.fundamentalSequence a = .limit seq) :
     (⨆ i, E0.eval (seq i)) = E0.eval a
   ```
 - an ergonomic limit-only API through `E0.limitFundamentalSequence`.
 
-The last theorem identifies the represented order type exactly with the initial segment below ε₀.
+The range theorem `E0.range_eval_eq_Iio_epsilon_zero` identifies the represented order type exactly with the initial segment below ε₀.
 
 ## Design
 
@@ -122,7 +123,9 @@ Complete. The ε₀ notation system now includes:
 - semantic cofinality;
 - the supremum/convergence theorem
   ```lean
-  (⨆ i, E0.eval (seq i)) = E0.eval a;
+  E0.fundamentalSequence_eq_limit_iSup_eval
+      (h : E0.fundamentalSequence a = .limit seq) :
+    (⨆ i, E0.eval (seq i)) = E0.eval a
   ```
 - an ergonomic limit API that hides classifier equalities once a semantic limit hypothesis is available.
 
