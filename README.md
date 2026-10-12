@@ -5,9 +5,9 @@
 
 Executable recursive ordinal notation systems in Lean 4, with verified semantics and order types.
 
-Version 0.1.0 is the ε₀ milestone: the project defines a finite, computable notation system and proves that its canonical terms represent exactly the ordinals below ε₀.
+Version 0.2.0 extends the verified ε₀ notation system with executable zero/successor/limit classification and certified fundamental sequences for limit notations.
 
-## What v0.1.0 provides
+## What v0.2.0 provides
 
 The ε₀ development includes:
 
@@ -28,6 +28,16 @@ The ε₀ development includes:
   E0.range_eval_eq_Iio_epsilon_zero :
     Set.range E0.eval = Set.Iio ε₀
   ```
+- executable zero/successor/limit classification via `E0.fundamentalSequence`;
+- certified successor predecessors and limit fundamental sequences;
+- strict monotonicity and boundedness of limit sequences;
+- semantic cofinality below the represented limit ordinal;
+- convergence of semantic values:
+  ```lean
+  E0.fundamentalSequence_eq_limit_iSup_eval :
+    (⨆ i, E0.eval (seq i)) = E0.eval a
+  ```
+- an ergonomic limit-only API through `E0.limitFundamentalSequence`.
 
 The last theorem identifies the represented order type exactly with the initial segment below ε₀.
 
@@ -45,12 +55,12 @@ See [`docs/design.md`](docs/design.md) for the frozen initial design and [`docs/
 
 ## Toolchain
 
-v0.1.0 is pinned to:
+v0.2.0 is pinned to:
 
 - Lean `v4.34.1`
 - mathlib `v4.34.1`
 
-The package version in `lakefile.toml` is `0.1.0`.
+The package version in `lakefile.toml` is `0.2.0`.
 
 ## Build
 
@@ -88,6 +98,9 @@ example (a b : E0) :
 
 #check E0.orderIsoNONote
 #check E0.range_eval_eq_Iio_epsilon_zero
+#check E0.fundamentalSequence
+#check E0.limitFundamentalSequence
+#check E0.limitFundamentalSequence_iSup_eval
 ```
 
 `E0.eval` is noncomputable because mathlib ordinal arithmetic is noncomputable. The notation syntax, normality checker, comparator, and transported notation algorithms remain finite computational objects.
@@ -100,16 +113,18 @@ Complete. The canonical notation type has verified order type exactly ε₀, wit
 
 ### v0.2 - fundamental sequences
 
-In development:
+Complete. The ε₀ notation system now includes:
 
-- zero/successor/limit classification;
-- canonical predecessor or fundamental-sequence output;
-- strictly increasing limit sequences;
-- boundedness below the represented notation;
-- semantic cofinality in the represented limit ordinal.
-
-The first v0.2 slice transports mathlib's verified `ONote.fundamentalSequence`
-construction through the canonical `E0 ≃o NONote` bridge.
+- executable zero/successor/limit classification;
+- canonical predecessor output in the successor branch;
+- canonical fundamental sequences in the limit branch;
+- strict monotonicity and boundedness;
+- semantic cofinality;
+- the supremum/convergence theorem
+  ```lean
+  (⨆ i, E0.eval (seq i)) = E0.eval a;
+  ```
+- an ergonomic limit API that hides classifier equalities once a semantic limit hypothesis is available.
 
 ### v0.3 - generic notation-system API
 
@@ -123,13 +138,13 @@ Longer-term work may move beyond mathlib's existing concrete notation systems to
 
 ## Scope
 
-v0.1.0 does not formalize Gentzen's consistency proof, infinitary proof systems, cut elimination, fast-growing hierarchies, or collapsing-function systems. Its purpose is the notation infrastructure itself.
+v0.2.0 does not formalize Gentzen's consistency proof, infinitary proof systems, cut elimination, fast-growing hierarchies, or collapsing-function systems. Its purpose remains the verified notation and fundamental-sequence infrastructure.
 
 ## Citation and archival metadata
 
 Citation metadata is provided in [`CITATION.cff`](CITATION.cff). Zenodo-specific release metadata is provided in [`.zenodo.json`](.zenodo.json).
 
-The v0.1.0 release procedure is documented in [`docs/release-v0.1.0.md`](docs/release-v0.1.0.md). The archived release is available through the Zenodo DOI badge above.
+Release procedures are documented in [`docs/release-v0.1.0.md`](docs/release-v0.1.0.md) and [`docs/release-v0.2.0.md`](docs/release-v0.2.0.md). The archived project is available through the Zenodo DOI badge above.
 
 See [`CHANGELOG.md`](CHANGELOG.md) for the release summary.
 
