@@ -1,6 +1,6 @@
 # API guide
 
-This guide describes the public ε₀ API shipped in v0.1.0.
+This guide describes the public ε₀ API shipped in v0.2.0.
 
 The simplest import is:
 
@@ -304,9 +304,112 @@ E0.mem_range_eval_iff :
   α ∈ Set.range E0.eval ↔ α < ε₀
 ```
 
-Together with the order embedding, this is the v0.1.0 order-type certification.
+Together with the order embedding, this is the core order-type certification inherited by v0.2.0.
 
-## 9. Module map
+## 9. Fundamental-sequence classification
+
+The executable classifier is:
+
+```lean
+E0.fundamentalSequence :
+  E0 → E0.FundamentalSequenceResult
+```
+
+with result type:
+
+```lean
+inductive E0.FundamentalSequenceResult
+  | zero
+  | succ (predecessor : E0)
+  | limit (seq : Nat → E0)
+```
+
+The master correctness theorem is:
+
+```lean
+E0.fundamentalSequence_has_prop
+```
+
+Its semantic specification says:
+
+- `zero` means the input evaluates to ordinal zero;
+- `succ predecessor` means the input evaluates to the ordinal successor of the returned predecessor;
+- `limit seq` means the input evaluates to a genuine limit ordinal, `seq` is strictly increasing and bounded by the input notation, and its semantic values are cofinal below the represented ordinal.
+
+The branch-specific convenience API includes:
+
+```lean
+E0.fundamentalSequence_eq_zero_eval
+E0.eq_zero_of_fundamentalSequence_eq_zero
+
+E0.fundamentalSequence_eq_succ_eval
+E0.fundamentalSequence_predecessor_lt
+
+E0.fundamentalSequence_eq_limit_isSuccLimit
+E0.fundamentalSequence_eq_limit_step_lt
+E0.fundamentalSequence_eq_limit_strictMono
+E0.fundamentalSequence_eq_limit_lt
+E0.fundamentalSequence_eq_limit_cofinal
+```
+
+## 10. Convergence of limit fundamental sequences
+
+For a limit branch, semantic cofinality is packaged as an indexed-supremum theorem:
+
+```lean
+E0.fundamentalSequence_eq_limit_iSup_eval
+    (h : E0.fundamentalSequence a = .limit seq) :
+    (⨆ i, E0.eval (seq i)) = E0.eval a
+```
+
+Thus the verified fundamental sequence does not merely stay below the represented ordinal: its semantic values converge to it exactly.
+
+## 11. Ergonomic limit API
+
+When a proof already knows that `E0.eval a` is a limit ordinal, callers need not carry a classifier equality.
+
+The certified bundle is:
+
+```lean
+E0.LimitFundamentalSequenceData (a : E0)
+```
+
+It contains:
+
+```lean
+seq        : Nat → E0
+strictMono : StrictMono seq
+lt         : ∀ i, seq i < a
+cofinal    : ∀ {α : Ordinal}, α < E0.eval a → ∃ i, α < E0.eval (seq i)
+iSup_eval  : (⨆ i, E0.eval (seq i)) = E0.eval a
+```
+
+The direct accessor is:
+
+```lean
+E0.limitFundamentalSequence
+    (a : E0) (hlim : IsSuccLimit (E0.eval a)) :
+    Nat → E0
+```
+
+and its projection theorems are:
+
+```lean
+E0.limitFundamentalSequence_strictMono
+E0.limitFundamentalSequence_lt
+E0.limitFundamentalSequence_cofinal
+E0.limitFundamentalSequence_iSup_eval
+```
+
+Typical use:
+
+```lean
+example (a : E0) (hlim : IsSuccLimit (E0.eval a)) :
+    (⨆ i, E0.eval (E0.limitFundamentalSequence a hlim i)) = E0.eval a :=
+  E0.limitFundamentalSequence_iSup_eval a hlim
+```
+
+## 12. Module map
 
 The implementation is split into small proof layers:
 
@@ -323,10 +426,14 @@ The implementation is split into small proof layers:
 - `MathlibOrderIso.lean`: `E0 ≃o NONote`.
 - `Operations.lean`: notation-level arithmetic.
 - `Completeness.lean`: exact semantic range below ε₀.
+- `FundamentalSequence.lean`: executable classifier and certified transport from mathlib `ONote`.
+- `FundamentalSequenceAPI.lean`: branch-specific zero/successor/limit theorems.
+- `FundamentalSequenceConvergence.lean`: indexed-supremum convergence theorem.
+- `LimitFundamentalSequence.lean`: ergonomic certified limit-sequence API.
 
 Import `OrdinalAnalysis` unless a narrower dependency is useful.
 
-## 10. Computational boundary
+## 13. Computational boundary
 
 The intended pattern is:
 
