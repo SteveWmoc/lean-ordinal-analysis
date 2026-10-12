@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.LimitFundamentalSequence
+import OrdinalAnalysis.Epsilon0.NotationSystem
