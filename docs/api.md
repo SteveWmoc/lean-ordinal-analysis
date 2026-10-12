@@ -388,7 +388,7 @@ The direct accessor is:
 
 ```lean
 E0.limitFundamentalSequence
-    (a : E0) (hlim : IsSuccLimit (E0.eval a)) :
+    (a : E0) (hlim : Order.IsSuccLimit (E0.eval a)) :
     Nat → E0
 ```
 
@@ -404,7 +404,7 @@ E0.limitFundamentalSequence_iSup_eval
 Typical use:
 
 ```lean
-example (a : E0) (hlim : IsSuccLimit (E0.eval a)) :
+example (a : E0) (hlim : Order.IsSuccLimit (E0.eval a)) :
     (⨆ i, E0.eval (E0.limitFundamentalSequence a hlim i)) = E0.eval a :=
   E0.limitFundamentalSequence_iSup_eval a hlim
 ```
