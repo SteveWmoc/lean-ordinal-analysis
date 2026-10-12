@@ -81,7 +81,8 @@ theorem le_iff_eval_le
     (system : OrdinalNotationSystem N) (a b : N) :
     a ≤ b ↔ system.eval a ≤ system.eval b := by
   constructor
-  · exact system.eval_monotone
+  · intro hab
+    exact system.eval_monotone hab
   · intro hab
     by_contra hnot
     have hba : b < a := lt_of_not_ge hnot
