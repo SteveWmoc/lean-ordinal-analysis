@@ -1,2 +1,3 @@
 import OrdinalAnalysis.Epsilon0.ExactInitialSegment
 import OrdinalAnalysis.Epsilon0.Classifier
+import OrdinalAnalysis.Generic.ClassifierConsequences
