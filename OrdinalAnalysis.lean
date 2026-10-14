@@ -1,1 +1,1 @@
-import OrdinalAnalysis.Epsilon0.NotationSystem
+import OrdinalAnalysis.Epsilon0.ExactInitialSegment
