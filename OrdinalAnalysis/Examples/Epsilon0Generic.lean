@@ -31,7 +31,7 @@ example :
   simpa using notationSystem.range_eval_eq_Iio
 
 /-- The generic exact-initial-segment construction recovers the ε₀ order type. -/
-example :
+noncomputable example :
     E0 ≃o Set.Iio ε₀ :=
   orderIsoIioEpsilonZero
 
