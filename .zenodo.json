@@ -1,21 +1,21 @@
 {
-  "title": "lean-ordinal-analysis: Verified ε₀ notation and fundamental sequences",
+  "title": "lean-ordinal-analysis: Generic verified ordinal notation systems",
   "upload_type": "software",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "creators": [
     {
       "name": "Sabean, Steven",
       "orcid": "0009-0009-9238-610X"
     }
   ],
-  "description": "Executable recursive ordinal notation systems in Lean 4. Version 0.2.0 provides a verified Cantor-normal-form notation system whose canonical terms represent exactly the ordinals below ε₀, together with executable zero/successor/limit classification and certified fundamental sequences for limit notations, including strict monotonicity, boundedness, semantic cofinality, and convergence.",
+  "description": "Executable recursive ordinal notation systems in Lean 4. Version 0.3.0 extracts a reusable verified ordinal-notation API from the completed ε₀ development, including exact initial-segment certification, generic zero/successor/limit classifiers, and certified limit sequences with strict monotonicity, boundedness, semantic cofinality, and convergence. The verified ε₀ system is packaged as a reference implementation of the generic interfaces.",
   "keywords": [
     "ordinal analysis",
     "proof theory",
-    "epsilon zero",
     "ordinal notation",
+    "epsilon zero",
     "fundamental sequences",
-    "Cantor normal form",
+    "order isomorphism",
     "Lean 4",
     "mathlib",
     "formal verification"
