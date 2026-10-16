@@ -3,3 +3,4 @@ import OrdinalAnalysis.Epsilon0.Classifier
 import OrdinalAnalysis.Generic.ClassifierConsequences
 import OrdinalAnalysis.Generic.LimitSequence
 import OrdinalAnalysis.Examples.Epsilon0Generic
+import OrdinalAnalysis.Gamma0.Term
