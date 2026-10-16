@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.3.0
+
+Generic verified ordinal-notation API milestone.
+
+### Added
+
+- `OrdinalNotationSystem N`, a reusable interface for canonical ordinal notation systems with:
+  - semantic evaluation;
+  - an exact ordinal bound;
+  - order correctness;
+  - completeness below the bound.
+- Generic monotonicity, injectivity, and semantic order-embedding theorems.
+- Generic exact-range theorem
+  ```lean
+  system.range_eval_eq_Iio :
+    Set.range system.eval = Set.Iio system.bound
+  ```
+- Generic exact order isomorphism
+  ```lean
+  system.orderIsoIio :
+    N ≃o Set.Iio system.bound
+  ```
+- Generic `ClassificationResult N` with zero, successor, and limit branches.
+- `OrdinalClassifier system`, bundling a classifier with its semantic correctness proof.
+- Generic successor-predecessor and limit-sequence consequences.
+- Generic strict monotonicity, boundedness, semantic cofinality, and indexed-supremum convergence for limit sequences.
+- `OrdinalClassifier.LimitSequenceData` and the ergonomic `classifier.limitSequence` API.
+- `E0.notationSystem : OrdinalNotationSystem E0`.
+- `E0.classifier : OrdinalClassifier E0.notationSystem`.
+- `E0.orderIsoIioEpsilonZero : E0 ≃o Set.Iio ε₀`.
+- Compiled ε₀ examples exercising the complete generic API.
+- Dedicated generic API guide and v0.3.0 release documentation.
+
+### Design
+
+The generic interface deliberately begins at canonical notation types. It does not prescribe raw syntax, normal forms, normalization, arithmetic, a distinguished syntactic zero, or a concrete comparison algorithm. Γ₀/Veblen notation is reserved for v0.4 as the first serious second implementation of the abstraction.
+
+### Toolchain
+
+- Lean `v4.34.1`.
+- mathlib `v4.34.1`.
+
+### License
+
+- Released under the MIT License.
+
 ## 0.2.0
 
 Fundamental-sequence milestone for the verified ε₀ notation system.
