@@ -1,6 +1,6 @@
 # API guide
 
-This guide describes the public ε₀ API shipped in v0.2.0.
+This guide describes the detailed ε₀ API shipped through v0.3.0. The reusable generic notation-system API introduced in v0.3.0 is documented separately in [`generic-api.md`](generic-api.md).
 
 The simplest import is:
 
@@ -304,7 +304,7 @@ E0.mem_range_eval_iff :
   α ∈ Set.range E0.eval ↔ α < ε₀
 ```
 
-Together with the order embedding, this is the core order-type certification inherited by v0.2.0.
+Together with the order embedding, this is the core ε₀ order-type certification. In v0.3.0 it is also recovered through `E0.notationSystem` and the generic exact-initial-segment API.
 
 ## 9. Fundamental-sequence classification
 
@@ -430,6 +430,8 @@ The implementation is split into small proof layers:
 - `FundamentalSequenceAPI.lean`: branch-specific zero/successor/limit theorems.
 - `FundamentalSequenceConvergence.lean`: indexed-supremum convergence theorem.
 - `LimitFundamentalSequence.lean`: ergonomic certified limit-sequence API.
+
+v0.3.0 additionally packages this development as `E0.notationSystem : OrdinalNotationSystem E0` and `E0.classifier : OrdinalClassifier E0.notationSystem`. See [`generic-api.md`](generic-api.md) and `OrdinalAnalysis/Examples/Epsilon0Generic.lean` for the reusable interface and compiled examples.
 
 Import `OrdinalAnalysis` unless a narrower dependency is useful.
 
