@@ -5,9 +5,9 @@
 
 Executable recursive ordinal notation systems in Lean 4, with verified semantics and order types.
 
-Version 0.2.0 extends the verified ε₀ notation system with executable zero/successor/limit classification and certified fundamental sequences for limit notations.
+Version 0.3.0 extracts a reusable verified ordinal-notation API from the completed ε₀ development, including exact initial-segment theory, certified zero/successor/limit classifiers, and generic limit-sequence convergence.
 
-## What v0.2.0 provides
+## What v0.3.0 provides
 
 The ε₀ development includes:
 
@@ -38,7 +38,14 @@ The ε₀ development includes:
       (h : E0.fundamentalSequence a = .limit seq) :
     (⨆ i, E0.eval (seq i)) = E0.eval a
   ```
-- an ergonomic limit-only API through `E0.limitFundamentalSequence`.
+- an ergonomic limit-only API through `E0.limitFundamentalSequence`;
+- the generic `OrdinalNotationSystem` interface;
+- generic exact-range and order-isomorphism theory;
+- the generic `ClassificationResult` and certified `OrdinalClassifier` interfaces;
+- generic successor/limit consequences, cofinality, and convergence;
+- the generic ergonomic `OrdinalClassifier.limitSequence` API;
+- `E0.notationSystem` and `E0.classifier` as reference implementations;
+- compiled examples showing the ε₀ system satisfies the complete generic API.
 
 The range theorem `E0.range_eval_eq_Iio_epsilon_zero` identifies the represented order type exactly with the initial segment below ε₀.
 
@@ -52,16 +59,16 @@ The project keeps three layers separate:
 
 This separation is intentional. The raw comparator does not call abstract ordinal comparison. The current ε₀ implementation does reuse mathlib's `ONote`/`NONote` machinery for canonical interoperability and arithmetic after the independent syntax and comparison theory has been verified.
 
-See [`docs/design.md`](docs/design.md) for the frozen initial design and [`docs/api.md`](docs/api.md) for the user-facing API guide.
+See [`docs/design.md`](docs/design.md) for the frozen initial ε₀ design, [`docs/api.md`](docs/api.md) for the detailed ε₀ API, and [`docs/generic-api.md`](docs/generic-api.md) for the v0.3 generic notation-system guide.
 
 ## Toolchain
 
-v0.2.0 is pinned to:
+v0.3.0 is pinned to:
 
 - Lean `v4.34.1`
 - mathlib `v4.34.1`
 
-The package version in `lakefile.toml` is `0.2.0`.
+The package version in `lakefile.toml` is `0.3.0`.
 
 ## Build
 
@@ -102,6 +109,10 @@ example (a b : E0) :
 #check E0.fundamentalSequence
 #check E0.limitFundamentalSequence
 #check E0.limitFundamentalSequence_iSup_eval
+#check E0.notationSystem
+#check E0.notationSystem.orderIsoIio
+#check E0.classifier
+#check E0.classifier.limitSequence_iSup_eval
 ```
 
 `E0.eval` is noncomputable because mathlib ordinal arithmetic is noncomputable. The notation syntax, normality checker, comparator, and transported notation algorithms remain finite computational objects.
@@ -131,7 +142,15 @@ Complete. The ε₀ notation system now includes:
 
 ### v0.3 - generic notation-system API
 
-Extract reusable abstractions after the ε₀ implementation has exposed the right interface.
+Complete. The project now provides:
+
+- `OrdinalNotationSystem` for exact canonical notation systems;
+- generic order embedding and exact initial-segment theory;
+- `ClassificationResult` and certified `OrdinalClassifier`;
+- generic zero/successor/limit consequences;
+- generic cofinality and indexed-supremum convergence;
+- an ergonomic generic limit-sequence API;
+- ε₀ adapters and compiled examples demonstrating the abstraction.
 
 ### v0.4 - Γ₀
 
@@ -141,13 +160,13 @@ Longer-term work may move beyond mathlib's existing concrete notation systems to
 
 ## Scope
 
-v0.2.0 does not formalize Gentzen's consistency proof, infinitary proof systems, cut elimination, fast-growing hierarchies, or collapsing-function systems. Its purpose remains the verified notation and fundamental-sequence infrastructure.
+v0.3.0 does not yet add Γ₀/Veblen syntax, Gentzen's consistency proof, infinitary proof systems, cut elimination, fast-growing hierarchies, or collapsing-function systems. Its purpose is the reusable verified notation-system infrastructure on which later concrete systems can build.
 
 ## Citation and archival metadata
 
 Citation metadata is provided in [`CITATION.cff`](CITATION.cff). Zenodo-specific release metadata is provided in [`.zenodo.json`](.zenodo.json).
 
-Release procedures are documented in [`docs/release-v0.1.0.md`](docs/release-v0.1.0.md) and [`docs/release-v0.2.0.md`](docs/release-v0.2.0.md). The archived project is available through the Zenodo DOI badge above.
+Release procedures are documented in [`docs/release-v0.1.0.md`](docs/release-v0.1.0.md), [`docs/release-v0.2.0.md`](docs/release-v0.2.0.md), and [`docs/release-v0.3.0.md`](docs/release-v0.3.0.md). The archived project is available through the Zenodo DOI badge above.
 
 See [`CHANGELOG.md`](CHANGELOG.md) for the release summary.
 
