@@ -62,6 +62,12 @@ termination_by a.nodeCount + b.nodeCount
 decreasing_by
   all_goals
     simp [nodeCount, principal]
+    have hindex := nodeCount_pos index
+    have harg := nodeCount_pos arg
+    have htail := nodeCount_pos tail
+    have hindex' := nodeCount_pos index'
+    have harg' := nodeCount_pos arg'
+    have htail' := nodeCount_pos tail'
     omega
 
 /--
@@ -82,8 +88,8 @@ def rawLT (a b : G0Term) : Bool :=
 @[simp]
 theorem rawLT_zero_veblen
     (index arg : G0Term) (coeff : Nat) (tail : G0Term) :
-    RawLT .zero (.veblen index arg coeff tail) :=
-  rfl
+    RawLT .zero (.veblen index arg coeff tail) := by
+  simp [RawLT, compareRaw]
 
 /-- No nonzero raw Γ₀ term is raw-smaller than zero. -/
 @[simp]
@@ -92,14 +98,14 @@ theorem not_rawLT_veblen_zero
     ¬ RawLT (.veblen index arg coeff tail) .zero := by
   simp [RawLT, compareRaw]
 
-example : compareRaw G0Term.zero G0Term.zero = .eq := rfl
-example : compareRaw G0Term.zero G0Term.one = .lt := rfl
-example : compareRaw G0Term.one G0Term.zero = .gt := rfl
-example : compareRaw G0Term.one G0Term.one = .eq := rfl
-example : compareRaw G0Term.one G0Term.omega = .lt := rfl
-example : compareRaw G0Term.omega G0Term.epsilonZero = .lt := rfl
-example : RawLT G0Term.zero G0Term.one := rfl
-example : rawLT G0Term.zero G0Term.one = true := rfl
+example : compareRaw G0Term.zero G0Term.zero = .eq := by native_decide
+example : compareRaw G0Term.zero G0Term.one = .lt := by native_decide
+example : compareRaw G0Term.one G0Term.zero = .gt := by native_decide
+example : compareRaw G0Term.one G0Term.one = .eq := by native_decide
+example : compareRaw G0Term.one G0Term.omega = .lt := by native_decide
+example : compareRaw G0Term.omega G0Term.epsilonZero = .lt := by native_decide
+example : RawLT G0Term.zero G0Term.one := by native_decide
+example : rawLT G0Term.zero G0Term.one = true := by native_decide
 
 end G0Term
 end OrdinalAnalysis
