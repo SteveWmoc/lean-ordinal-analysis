@@ -102,6 +102,11 @@ def nodeCount : G0Term → Nat
   | .veblen index arg _ tail =>
       1 + index.nodeCount + arg.nodeCount + tail.nodeCount
 
+/-- Every raw Γ₀ term contains at least one constructor node. -/
+@[simp]
+theorem nodeCount_pos (t : G0Term) : 0 < t.nodeCount := by
+  cases t <;> simp [nodeCount]
+
 example : G0Term.zero.isZero = true := rfl
 example : G0Term.one.isZero = false := rfl
 example : G0Term.one.leadingIndex? = some G0Term.zero := rfl
