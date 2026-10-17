@@ -104,7 +104,9 @@ example : compareRaw G0Term.one G0Term.zero = .gt := by native_decide
 example : compareRaw G0Term.one G0Term.one = .eq := by native_decide
 example : compareRaw G0Term.one G0Term.omega = .lt := by native_decide
 example : compareRaw G0Term.omega G0Term.epsilonZero = .lt := by native_decide
-example : RawLT G0Term.zero G0Term.one := by native_decide
+example : RawLT G0Term.zero G0Term.one := by
+  change compareRaw G0Term.zero G0Term.one = .lt
+  native_decide
 example : rawLT G0Term.zero G0Term.one = true := by native_decide
 
 end G0Term
