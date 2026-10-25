@@ -6,3 +6,4 @@ import OrdinalAnalysis.Examples.Epsilon0Generic
 import OrdinalAnalysis.Gamma0.Term
 import OrdinalAnalysis.Gamma0.Compare
 import OrdinalAnalysis.Gamma0.NormalForm
+import OrdinalAnalysis.Gamma0.Semantics
