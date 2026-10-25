@@ -148,8 +148,9 @@ theorem compareRaw_eq_cmp_eval
                             rw [← hTail]
                             exact hTailRaw
                           simp only [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply (cmp_eq_eq_iff _ _).2
-                          rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq]
+                          exact
+                            ((cmp_eq_eq_iff _ _).2 (by
+                              rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq])).symm
           | lt =>
               have hIndexSem :
                   cmp (eval index) (eval index') = .lt := by
@@ -250,8 +251,9 @@ theorem compareRaw_eq_cmp_eval
                             rw [← hTail]
                             exact hTailRaw
                           simp only [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply (cmp_eq_eq_iff _ _).2
-                          rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq]
+                          exact
+                            ((cmp_eq_eq_iff _ _).2 (by
+                              rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq])).symm
           | gt =>
               have hIndexSem :
                   cmp (eval index) (eval index') = .gt := by
@@ -352,12 +354,14 @@ theorem compareRaw_eq_cmp_eval
                             rw [← hTail]
                             exact hTailRaw
                           simp only [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply (cmp_eq_eq_iff _ _).2
-                          rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq]
+                          exact
+                            ((cmp_eq_eq_iff _ _).2 (by
+                              rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq])).symm
 termination_by a.nodeCount + b.nodeCount
 decreasing_by
   all_goals
-    simp_all [nodeCount, principal]
+    simp_wf
+    simp [nodeCount, principal]
     have hindex := nodeCount_pos index
     have harg := nodeCount_pos arg
     have htail := nodeCount_pos tail
