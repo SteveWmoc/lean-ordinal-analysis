@@ -75,7 +75,7 @@ theorem compareRaw_eq_cmp_eval
                     rw [← hPrincipal]
                     exact hPrincipalRaw
                   have hsem :=
-                    eval_veblen_lt_of_principal_lt coeff coeff'
+                    eval_veblen_lt_of_principal_lt (tail' := tail') coeff coeff'
                       ha.tail_lt_principal hPrincipalSem
                   rw [compareRaw, hIndexRaw, hPrincipalRaw]
                   exact ((cmp_eq_lt_iff _ _).2 hsem).symm
@@ -87,7 +87,7 @@ theorem compareRaw_eq_cmp_eval
                     rw [← hPrincipal]
                     exact hPrincipalRaw
                   have hsem :=
-                    eval_veblen_lt_of_principal_lt coeff' coeff
+                    eval_veblen_lt_of_principal_lt (tail' := tail) coeff' coeff
                       hb.tail_lt_principal hPrincipalSem
                   rw [compareRaw, hIndexRaw, hPrincipalRaw]
                   exact ((cmp_eq_gt_iff _ _).2 hsem).symm
@@ -103,20 +103,18 @@ theorem compareRaw_eq_cmp_eval
                       have hCoeffLt : coeff < coeff' :=
                         Nat.compare_eq_lt.mp hCoeff
                       rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff]
-                      apply ((cmp_eq_lt_iff _ _).2 ?_).symm
-                      rw [← hPrincipalEq]
                       exact
-                        eval_veblen_lt_of_coeff_lt
-                          ha.tail_lt_principal hCoeffLt
+                        ((cmp_eq_lt_iff _ _).2
+                          (eval_veblen_lt_of_coeff_lt_of_principal_eq
+                            ha.tail_lt_principal hPrincipalEq hCoeffLt)).symm
                   | gt =>
                       have hCoeffLt : coeff' < coeff :=
                         Nat.compare_eq_gt.mp hCoeff
                       rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff]
-                      apply ((cmp_eq_gt_iff _ _).2 ?_).symm
-                      rw [← hPrincipalEq]
                       exact
-                        eval_veblen_lt_of_coeff_lt
-                          hb.tail_lt_principal hCoeffLt
+                        ((cmp_eq_gt_iff _ _).2
+                          (eval_veblen_lt_of_coeff_lt_of_principal_eq
+                            hb.tail_lt_principal hPrincipalEq.symm hCoeffLt)).symm
                   | eq =>
                       have hCoeffEq : coeff = coeff' :=
                         Nat.compare_eq_eq.mp hCoeff
@@ -130,26 +128,28 @@ theorem compareRaw_eq_cmp_eval
                             rw [← hTail]
                             exact hTailRaw
                           rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply ((cmp_eq_lt_iff _ _).2 ?_).symm
-                          rw [← hPrincipalEq]
-                          exact eval_veblen_lt_of_tail_lt hTailSem
+                          exact
+                            ((cmp_eq_lt_iff _ _).2
+                              (eval_veblen_lt_of_tail_lt_of_principal_eq
+                                hPrincipalEq hTailSem)).symm
                       | gt =>
                           have hTailSem : eval tail' < eval tail := by
                             apply (cmp_eq_gt_iff _ _).1
                             rw [← hTail]
                             exact hTailRaw
                           rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply ((cmp_eq_gt_iff _ _).2 ?_).symm
-                          rw [← hPrincipalEq]
-                          exact eval_veblen_lt_of_tail_lt hTailSem
+                          exact
+                            ((cmp_eq_gt_iff _ _).2
+                              (eval_veblen_lt_of_tail_lt_of_principal_eq
+                                hPrincipalEq.symm hTailSem)).symm
                       | eq =>
                           have hTailEq : eval tail = eval tail' := by
                             apply (cmp_eq_eq_iff _ _).1
                             rw [← hTail]
                             exact hTailRaw
-                          rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
+                          simp only [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
                           apply (cmp_eq_eq_iff _ _).2
-                          simp [eval_veblen, hPrincipalEq, hTailEq]
+                          rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq]
           | lt =>
               have hIndexSem :
                   cmp (eval index) (eval index') = .lt := by
@@ -177,7 +177,7 @@ theorem compareRaw_eq_cmp_eval
                     rw [← hPrincipal]
                     exact hPrincipalRaw
                   have hsem :=
-                    eval_veblen_lt_of_principal_lt coeff coeff'
+                    eval_veblen_lt_of_principal_lt (tail' := tail') coeff coeff'
                       ha.tail_lt_principal hPrincipalSem
                   rw [compareRaw, hIndexRaw, hPrincipalRaw]
                   exact ((cmp_eq_lt_iff _ _).2 hsem).symm
@@ -189,7 +189,7 @@ theorem compareRaw_eq_cmp_eval
                     rw [← hPrincipal]
                     exact hPrincipalRaw
                   have hsem :=
-                    eval_veblen_lt_of_principal_lt coeff' coeff
+                    eval_veblen_lt_of_principal_lt (tail' := tail) coeff' coeff
                       hb.tail_lt_principal hPrincipalSem
                   rw [compareRaw, hIndexRaw, hPrincipalRaw]
                   exact ((cmp_eq_gt_iff _ _).2 hsem).symm
@@ -205,20 +205,18 @@ theorem compareRaw_eq_cmp_eval
                       have hCoeffLt : coeff < coeff' :=
                         Nat.compare_eq_lt.mp hCoeff
                       rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff]
-                      apply ((cmp_eq_lt_iff _ _).2 ?_).symm
-                      rw [← hPrincipalEq]
                       exact
-                        eval_veblen_lt_of_coeff_lt
-                          ha.tail_lt_principal hCoeffLt
+                        ((cmp_eq_lt_iff _ _).2
+                          (eval_veblen_lt_of_coeff_lt_of_principal_eq
+                            ha.tail_lt_principal hPrincipalEq hCoeffLt)).symm
                   | gt =>
                       have hCoeffLt : coeff' < coeff :=
                         Nat.compare_eq_gt.mp hCoeff
                       rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff]
-                      apply ((cmp_eq_gt_iff _ _).2 ?_).symm
-                      rw [← hPrincipalEq]
                       exact
-                        eval_veblen_lt_of_coeff_lt
-                          hb.tail_lt_principal hCoeffLt
+                        ((cmp_eq_gt_iff _ _).2
+                          (eval_veblen_lt_of_coeff_lt_of_principal_eq
+                            hb.tail_lt_principal hPrincipalEq.symm hCoeffLt)).symm
                   | eq =>
                       have hCoeffEq : coeff = coeff' :=
                         Nat.compare_eq_eq.mp hCoeff
@@ -232,26 +230,28 @@ theorem compareRaw_eq_cmp_eval
                             rw [← hTail]
                             exact hTailRaw
                           rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply ((cmp_eq_lt_iff _ _).2 ?_).symm
-                          rw [← hPrincipalEq]
-                          exact eval_veblen_lt_of_tail_lt hTailSem
+                          exact
+                            ((cmp_eq_lt_iff _ _).2
+                              (eval_veblen_lt_of_tail_lt_of_principal_eq
+                                hPrincipalEq hTailSem)).symm
                       | gt =>
                           have hTailSem : eval tail' < eval tail := by
                             apply (cmp_eq_gt_iff _ _).1
                             rw [← hTail]
                             exact hTailRaw
                           rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply ((cmp_eq_gt_iff _ _).2 ?_).symm
-                          rw [← hPrincipalEq]
-                          exact eval_veblen_lt_of_tail_lt hTailSem
+                          exact
+                            ((cmp_eq_gt_iff _ _).2
+                              (eval_veblen_lt_of_tail_lt_of_principal_eq
+                                hPrincipalEq.symm hTailSem)).symm
                       | eq =>
                           have hTailEq : eval tail = eval tail' := by
                             apply (cmp_eq_eq_iff _ _).1
                             rw [← hTail]
                             exact hTailRaw
-                          rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
+                          simp only [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
                           apply (cmp_eq_eq_iff _ _).2
-                          simp [eval_veblen, hPrincipalEq, hTailEq]
+                          rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq]
           | gt =>
               have hIndexSem :
                   cmp (eval index) (eval index') = .gt := by
@@ -279,7 +279,7 @@ theorem compareRaw_eq_cmp_eval
                     rw [← hPrincipal]
                     exact hPrincipalRaw
                   have hsem :=
-                    eval_veblen_lt_of_principal_lt coeff coeff'
+                    eval_veblen_lt_of_principal_lt (tail' := tail') coeff coeff'
                       ha.tail_lt_principal hPrincipalSem
                   rw [compareRaw, hIndexRaw, hPrincipalRaw]
                   exact ((cmp_eq_lt_iff _ _).2 hsem).symm
@@ -291,7 +291,7 @@ theorem compareRaw_eq_cmp_eval
                     rw [← hPrincipal]
                     exact hPrincipalRaw
                   have hsem :=
-                    eval_veblen_lt_of_principal_lt coeff' coeff
+                    eval_veblen_lt_of_principal_lt (tail' := tail) coeff' coeff
                       hb.tail_lt_principal hPrincipalSem
                   rw [compareRaw, hIndexRaw, hPrincipalRaw]
                   exact ((cmp_eq_gt_iff _ _).2 hsem).symm
@@ -307,20 +307,18 @@ theorem compareRaw_eq_cmp_eval
                       have hCoeffLt : coeff < coeff' :=
                         Nat.compare_eq_lt.mp hCoeff
                       rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff]
-                      apply ((cmp_eq_lt_iff _ _).2 ?_).symm
-                      rw [← hPrincipalEq]
                       exact
-                        eval_veblen_lt_of_coeff_lt
-                          ha.tail_lt_principal hCoeffLt
+                        ((cmp_eq_lt_iff _ _).2
+                          (eval_veblen_lt_of_coeff_lt_of_principal_eq
+                            ha.tail_lt_principal hPrincipalEq hCoeffLt)).symm
                   | gt =>
                       have hCoeffLt : coeff' < coeff :=
                         Nat.compare_eq_gt.mp hCoeff
                       rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff]
-                      apply ((cmp_eq_gt_iff _ _).2 ?_).symm
-                      rw [← hPrincipalEq]
                       exact
-                        eval_veblen_lt_of_coeff_lt
-                          hb.tail_lt_principal hCoeffLt
+                        ((cmp_eq_gt_iff _ _).2
+                          (eval_veblen_lt_of_coeff_lt_of_principal_eq
+                            hb.tail_lt_principal hPrincipalEq.symm hCoeffLt)).symm
                   | eq =>
                       have hCoeffEq : coeff = coeff' :=
                         Nat.compare_eq_eq.mp hCoeff
@@ -334,27 +332,29 @@ theorem compareRaw_eq_cmp_eval
                             rw [← hTail]
                             exact hTailRaw
                           rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply ((cmp_eq_lt_iff _ _).2 ?_).symm
-                          rw [← hPrincipalEq]
-                          exact eval_veblen_lt_of_tail_lt hTailSem
+                          exact
+                            ((cmp_eq_lt_iff _ _).2
+                              (eval_veblen_lt_of_tail_lt_of_principal_eq
+                                hPrincipalEq hTailSem)).symm
                       | gt =>
                           have hTailSem : eval tail' < eval tail := by
                             apply (cmp_eq_gt_iff _ _).1
                             rw [← hTail]
                             exact hTailRaw
                           rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
-                          apply ((cmp_eq_gt_iff _ _).2 ?_).symm
-                          rw [← hPrincipalEq]
-                          exact eval_veblen_lt_of_tail_lt hTailSem
+                          exact
+                            ((cmp_eq_gt_iff _ _).2
+                              (eval_veblen_lt_of_tail_lt_of_principal_eq
+                                hPrincipalEq.symm hTailSem)).symm
                       | eq =>
                           have hTailEq : eval tail = eval tail' := by
                             apply (cmp_eq_eq_iff _ _).1
                             rw [← hTail]
                             exact hTailRaw
-                          rw [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
+                          simp only [compareRaw, hIndexRaw, hPrincipalRaw, hCoeff, hTailRaw]
                           apply (cmp_eq_eq_iff _ _).2
-                          simp [eval_veblen, hPrincipalEq, hTailEq]
-termination_by a b => a.nodeCount + b.nodeCount
+                          rw [eval_veblen, eval_veblen, hPrincipalEq, hTailEq]
+termination_by a.nodeCount + b.nodeCount
 decreasing_by
   all_goals
     simp_all [nodeCount, principal]
@@ -411,10 +411,10 @@ theorem hasSemanticTailBounds_of_normal
             apply (cmp_eq_lt_iff _ _).1
             rw [← hcmp]
             exact htailPrincipalRaw
-          exact
-            eval_veblen_lt_principal_of_principal_lt tailCoeff
+          simpa [eval_principal] using
+            (eval_veblen_lt_principal_of_principal_lt tailCoeff
               htailBounds.tail_lt_principal
-              (by simpa using hprincipalSem)
+              (by simpa [eval_principal] using hprincipalSem))
 
 /-- On normal raw terms, the executable comparator agrees exactly with ordinal `cmp`. -/
 theorem compareRaw_eq_cmp_eval_of_normal
