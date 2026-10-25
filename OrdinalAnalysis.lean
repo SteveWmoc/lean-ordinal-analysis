@@ -7,3 +7,4 @@ import OrdinalAnalysis.Gamma0.Term
 import OrdinalAnalysis.Gamma0.Compare
 import OrdinalAnalysis.Gamma0.NormalForm
 import OrdinalAnalysis.Gamma0.Semantics
+import OrdinalAnalysis.Gamma0.Correctness
