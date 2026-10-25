@@ -32,9 +32,9 @@ theorem compareRaw_eq_cmp_eval
     (ha : HasSemanticTailBounds a)
     (hb : HasSemanticTailBounds b) :
     compareRaw a b = cmp (eval a) (eval b) := by
-  cases a with
+  cases hA : a with
   | zero =>
-      cases b with
+      cases hB : b with
       | zero =>
           simp [compareRaw]
       | veblen index' arg' coeff' tail' =>
@@ -43,7 +43,7 @@ theorem compareRaw_eq_cmp_eval
           rw [compareRaw]
           exact ((cmp_eq_lt_iff _ _).2 hpos).symm
   | veblen index arg coeff tail =>
-      cases b with
+      cases hB : b with
       | zero =>
           have hpos : 0 < eval (.veblen index arg coeff tail) :=
             eval_veblen_pos index arg coeff tail
@@ -361,7 +361,7 @@ termination_by a.nodeCount + b.nodeCount
 decreasing_by
   all_goals
     simp_wf
-    simp [nodeCount, principal]
+    simp only [hA, hB, nodeCount, principal]
     have hindex := nodeCount_pos index
     have harg := nodeCount_pos arg
     have htail := nodeCount_pos tail
