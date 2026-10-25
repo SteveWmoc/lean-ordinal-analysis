@@ -103,7 +103,7 @@ below the larger principal.
 theorem eval_veblen_lt_principal_of_principal_lt
     {index arg tail index' arg' : G0Term} (coeff : Nat)
     (htail :
-      eval tail < Ordinal.veblen (eval index) (eval arg))
+      eval tail < eval (principal index arg))
     (hprincipal :
       Ordinal.veblen (eval index) (eval arg) <
         Ordinal.veblen (eval index') (eval arg')) :
@@ -117,7 +117,7 @@ theorem eval_veblen_lt_principal_of_principal_lt
   rw [eval_veblen, ← hx, ← hy]
   apply Ordinal.opow_mul_add_lt_opow
   · exact Ordinal.natCast_lt_omega0 coeff.succ
-  · simpa [hx] using htail
+  · simpa [eval_principal, hx] using htail
   · exact hxy
 
 /-- A smaller leading Veblen principal makes the whole source node smaller. -/
@@ -125,7 +125,7 @@ theorem eval_veblen_lt_of_principal_lt
     {index arg tail index' arg' tail' : G0Term}
     (coeff coeff' : Nat)
     (htail :
-      eval tail < Ordinal.veblen (eval index) (eval arg))
+      eval tail < eval (principal index arg))
     (hprincipal :
       Ordinal.veblen (eval index) (eval arg) <
         Ordinal.veblen (eval index') (eval arg')) :
@@ -148,7 +148,7 @@ theorem eval_veblen_lt_of_principal_lt
 theorem eval_veblen_lt_of_coeff_lt
     {index arg tail tail' : G0Term} {coeff coeff' : Nat}
     (htail :
-      eval tail < Ordinal.veblen (eval index) (eval arg))
+      eval tail < eval (principal index arg))
     (hcoeff : coeff < coeff') :
     eval (.veblen index arg coeff tail) <
       eval (.veblen index arg coeff' tail') := by
@@ -159,7 +159,7 @@ theorem eval_veblen_lt_of_coeff_lt
     exact_mod_cast Nat.succ_lt_succ hcoeff
   exact
     (Ordinal.opow_mul_add_lt_opow_mul
-      (by simpa [hx] using htail) hcoeff').trans_le le_self_add
+      (by simpa [eval_principal, hx] using htail) hcoeff').trans_le le_self_add
 
 /-- At a common principal term and coefficient, comparison reduces to the tails. -/
 theorem eval_veblen_lt_of_tail_lt
