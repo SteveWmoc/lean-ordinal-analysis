@@ -161,6 +161,46 @@ theorem eval_veblen_lt_of_coeff_lt
     (Ordinal.opow_mul_add_lt_opow_mul
       (by simpa [eval_principal, hx] using htail) hcoeff').trans_le le_self_add
 
+/--
+At semantically equal Veblen principal terms, a smaller finite coefficient
+makes the whole source node smaller.
+-/
+theorem eval_veblen_lt_of_coeff_lt_of_principal_eq
+    {index arg tail index' arg' tail' : G0Term}
+    {coeff coeff' : Nat}
+    (htail :
+      eval tail < eval (principal index arg))
+    (hprincipal :
+      Ordinal.veblen (eval index) (eval arg) =
+        Ordinal.veblen (eval index') (eval arg'))
+    (hcoeff : coeff < coeff') :
+    eval (.veblen index arg coeff tail) <
+      eval (.veblen index' arg' coeff' tail') := by
+  rcases Ordinal.veblen_mem_range_opow (eval index) (eval arg) with ⟨x, hx⟩
+  rw [eval_veblen, eval_veblen, ← hprincipal, ← hx]
+  have hcoeff' :
+      (coeff.succ : Ordinal.{0}) < (coeff'.succ : Ordinal.{0}) := by
+    exact_mod_cast Nat.succ_lt_succ hcoeff
+  exact
+    (Ordinal.opow_mul_add_lt_opow_mul
+      (by simpa [eval_principal, hx] using htail) hcoeff').trans_le le_self_add
+
+/--
+At semantically equal Veblen principal terms and a common coefficient,
+comparison reduces to the tails.
+-/
+theorem eval_veblen_lt_of_tail_lt_of_principal_eq
+    {index arg tail index' arg' tail' : G0Term}
+    {coeff : Nat}
+    (hprincipal :
+      Ordinal.veblen (eval index) (eval arg) =
+        Ordinal.veblen (eval index') (eval arg'))
+    (htail : eval tail < eval tail') :
+    eval (.veblen index arg coeff tail) <
+      eval (.veblen index' arg' coeff tail') := by
+  rw [eval_veblen, eval_veblen, ← hprincipal]
+  exact (add_lt_add_iff_left _).2 htail
+
 /-- At a common principal term and coefficient, comparison reduces to the tails. -/
 theorem eval_veblen_lt_of_tail_lt
     {index arg tail tail' : G0Term} {coeff : Nat}
