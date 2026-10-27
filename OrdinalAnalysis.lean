@@ -15,3 +15,5 @@ import OrdinalAnalysis.Examples.Gamma0Order
 import OrdinalAnalysis.Gamma0.SemanticBounds
 import OrdinalAnalysis.Gamma0.BoundedEmbedding
 import OrdinalAnalysis.Examples.Gamma0Bounds
+import OrdinalAnalysis.Gamma0.VeblenDecomposition
+import OrdinalAnalysis.Examples.Gamma0Decomposition
