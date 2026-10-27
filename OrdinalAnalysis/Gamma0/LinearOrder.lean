@@ -50,6 +50,7 @@ theorem compareRaw_compares (a b : G0) :
   | gt =>
       change b < a
       apply (lt_iff_eval_lt b a).2
+      change G0Term.eval b.1 < G0Term.eval a.1
       apply (cmp_eq_gt_iff _ _).1
       rw [← G0Term.compareRaw_eq_cmp_eval_of_normal a.1 b.1 a.2 b.2]
       exact hcmp
