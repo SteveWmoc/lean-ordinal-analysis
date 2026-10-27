@@ -9,3 +9,6 @@ import OrdinalAnalysis.Gamma0.NormalForm
 import OrdinalAnalysis.Gamma0.Semantics
 import OrdinalAnalysis.Gamma0.Correctness
 import OrdinalAnalysis.Gamma0.Uniqueness
+import OrdinalAnalysis.Gamma0.LinearOrder
+import OrdinalAnalysis.Gamma0.OrderEmbedding
+import OrdinalAnalysis.Examples.Gamma0Order
