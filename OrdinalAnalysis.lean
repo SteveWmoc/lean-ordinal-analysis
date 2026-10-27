@@ -12,3 +12,6 @@ import OrdinalAnalysis.Gamma0.Uniqueness
 import OrdinalAnalysis.Gamma0.LinearOrder
 import OrdinalAnalysis.Gamma0.OrderEmbedding
 import OrdinalAnalysis.Examples.Gamma0Order
+import OrdinalAnalysis.Gamma0.SemanticBounds
+import OrdinalAnalysis.Gamma0.BoundedEmbedding
+import OrdinalAnalysis.Examples.Gamma0Bounds
