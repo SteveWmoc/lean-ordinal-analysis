@@ -82,8 +82,8 @@ open Ordinal
 Interpret a canonical Γ₀ notation as an ordinal.
 
 Canonicality is not needed to define the map; it becomes essential when
-proving comparison correctness, injectivity, the Γ₀ upper bound, and exact
-completeness below Γ₀.
+proving comparison correctness, injectivity, and exact completeness below Γ₀.
+The Γ₀ upper bound holds even for raw noncanonical terms.
 -/
 noncomputable def eval (a : G0) : Ordinal.{0} :=
   G0Term.eval a.1
