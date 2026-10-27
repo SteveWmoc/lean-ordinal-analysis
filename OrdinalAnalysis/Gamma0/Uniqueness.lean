@@ -26,8 +26,7 @@ theorem IsNormal.principal
     (harg : IsNormal arg)
     (hside : RawLT arg (principal index arg)) :
     IsNormal (principal index arg) := by
-  simpa [principal] using
-    (isNormal_veblen_zero_iff index arg 0).2 ⟨hindex, harg, hside⟩
+  exact (isNormal_veblen_zero_iff index arg 0).2 ⟨hindex, harg, hside⟩
 
 /--
 On normal Γ₀ terms, the executable raw comparator returns `.eq` exactly for
@@ -91,9 +90,9 @@ theorem compareRaw_eq_eq_iff_of_normal :
                         subst coeff'
                         cases hTail : compareRaw tail tail' with
                         | lt =>
-                            simp [compareRaw, hIndex, hArg, hCoeff, hTail] at hEq
+                            simp [compareRaw, hIndex, hArg, hTail] at hEq
                         | gt =>
-                            simp [compareRaw, hIndex, hArg, hCoeff, hTail] at hEq
+                            simp [compareRaw, hIndex, hArg, hTail] at hEq
                         | eq =>
                             have hTailEq : tail = tail' :=
                               (ihTail tail' haTail hbTail).1 hTail
@@ -143,15 +142,14 @@ theorem compareRaw_eq_eq_iff_of_normal :
                 | gt =>
                     simp [compareRaw, hIndex, hPrincipal] at hEq
                 | eq =>
-                    have hIndexSem : eval index' < eval index :=
-                      (rawLT_iff_eval_lt index' index hbIndex haIndex).1 <| by
-                        have hcmp :=
-                          compareRaw_eq_cmp_eval_of_normal
-                            index index' haIndex hbIndex
-                        have hsem : cmp (eval index) (eval index') = .gt := by
-                          rw [← hcmp]
-                          exact hIndex
-                        exact (cmp_eq_gt_iff _ _).1 hsem
+                    have hIndexSem : eval index' < eval index := by
+                      have hcmp :=
+                        compareRaw_eq_cmp_eval_of_normal
+                          index index' haIndex hbIndex
+                      have hsem : cmp (eval index) (eval index') = .gt := by
+                        rw [← hcmp]
+                        exact hIndex
+                      exact (cmp_eq_gt_iff _ _).1 hsem
                     have hPrincipalArgEq :
                         eval (principal index arg) = eval arg' := by
                       have hcmp :=
@@ -179,13 +177,8 @@ theorem compareRaw_eq_eq_iff_of_normal :
                         _ = eval arg' := hPrincipalArgEq
                     exact (lt_irrefl _ hbad).elim
           · intro hab
-            subst b
-            have hcmp :=
-              compareRaw_eq_cmp_eval_of_normal
-                (.veblen index arg coeff tail)
-                (.veblen index arg coeff tail) ha ha
-            rw [hcmp]
-            exact (cmp_eq_eq_iff _ _).2 rfl
+            rw [compareRaw_eq_cmp_eval_of_normal _ _ ha hb]
+            exact (cmp_eq_eq_iff _ _).2 (congrArg eval hab)
 
 end G0Term
 
