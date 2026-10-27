@@ -19,14 +19,14 @@ namespace OrdinalAnalysis
 namespace G0
 
 /-- Non-strict order on canonical Γ₀ terms, transported through ordinal evaluation. -/
-noncomputable instance instLE : LE G0 where
+instance instLE : LE G0 where
   le a b := eval a ≤ eval b
 
 /--
 The semantic non-strict relation and the existing executable strict relation
 form a preorder.
 -/
-noncomputable instance instPreorder : Preorder G0 where
+instance instPreorder : Preorder G0 where
   le := fun a b => eval a ≤ eval b
   lt := fun a b => G0Term.RawLT a.1 b.1
   le_refl := fun _ => le_rfl
@@ -59,7 +59,7 @@ theorem compareRaw_compares (a b : G0) :
 Canonical Γ₀ notations form a linear order whose strict comparison is the
 executable raw comparator.
 -/
-noncomputable instance instLinearOrder : LinearOrder G0 :=
+instance instLinearOrder : LinearOrder G0 :=
   linearOrderOfCompares
     (fun a b : G0 => G0Term.compareRaw a.1 b.1)
     compareRaw_compares
