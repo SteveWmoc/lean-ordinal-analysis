@@ -81,6 +81,22 @@ finite right multiplication, and addition. Compiled examples, including
 noncanonical terms, are in
 [`OrdinalAnalysis/Examples/Gamma0Bounds.lean`](OrdinalAnalysis/Examples/Gamma0Bounds.lean).
 
+The semantic completeness construction now has a certified decomposition step.
+For every nonzero `o < Γ₀`,
+`Gamma0Decomposition.decompose o hne hbound` provides `index`, `arg`,
+a stored natural `coeff`, and `tail` satisfying
+
+```lean
+Ordinal.veblen d.index d.arg * (d.coeff.succ : Ordinal) + d.tail = o
+```
+
+All three recursive ordinal inputs are strictly smaller than `o`, and both
+the argument and remainder are smaller than the leading Veblen principal term.
+This uses inverse Veblen functions and the leading Cantor coefficient and
+remainder. It is a noncomputable semantic construction for the completeness
+proof. Examples include the strict inverse-index bound at ε₀ and its failure
+at Γ₀.
+
 Completeness (surjectivity onto all ordinals below Γ₀) and the exact order-type
 theorem remain future work.
 
