@@ -10,11 +10,11 @@ ordinal evaluation. The concrete decisions reduce to the raw comparator.
 namespace OrdinalAnalysis
 
 -- Strict and non-strict comparison, including equality and reverse cases.
-example : G0.zero < G0.one := by decide
-example : G0.one ≤ G0.omega := by decide
-example : G0.epsilonZero ≤ G0.epsilonZero := by decide
-example : ¬ G0.epsilonZero ≤ G0.omega := by decide
-example : G0.omega ≠ G0.epsilonZero := by decide
+example : G0.zero < G0.one := by native_decide
+example : G0.one ≤ G0.omega := by native_decide
+example : G0.epsilonZero ≤ G0.epsilonZero := by native_decide
+example : ¬ G0.epsilonZero ≤ G0.omega := by native_decide
+example : G0.omega ≠ G0.epsilonZero := by native_decide
 
 -- Standard order laws are now available to downstream proofs.
 example (a b c : G0) (hab : a < b) (hbc : b ≤ c) : a < c :=
