@@ -49,6 +49,26 @@ The ε₀ development includes:
 
 The range theorem `E0.range_eval_eq_Iio_epsilon_zero` identifies the represented order type exactly with the initial segment below ε₀.
 
+## Current Γ₀ development
+
+The development branch now includes finite Veblen syntax, an executable
+normal-form checker and comparator, semantic comparison correctness, and
+uniqueness of canonical normal forms. Canonical `G0` notations carry a verified
+linear order and an ordinal order embedding:
+
+```lean
+G0.evalOrderEmbedding : G0 ↪o Ordinal
+G0.eval_lt_eval_iff (a b : G0) : G0.eval a < G0.eval b ↔ a < b
+G0.eval_le_eval_iff (a b : G0) : G0.eval a ≤ G0.eval b ↔ a ≤ b
+```
+
+Strict comparison remains the raw syntactic relation. The linear order's
+decision procedures are obtained from `G0Term.compareRaw`; ordinal evaluation
+certifies their correctness. Compiled examples are in
+[`OrdinalAnalysis/Examples/Gamma0Order.lean`](OrdinalAnalysis/Examples/Gamma0Order.lean).
+
+The exact Γ₀ range and order-type theorem remain future work.
+
 ## Design
 
 The project keeps three layers separate:
