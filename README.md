@@ -67,7 +67,22 @@ decision procedures are obtained from `G0Term.compareRaw`; ordinal evaluation
 certifies their correctness. Compiled examples are in
 [`OrdinalAnalysis/Examples/Gamma0Order.lean`](OrdinalAnalysis/Examples/Gamma0Order.lean).
 
-The exact Γ₀ range and order-type theorem remain future work.
+Every raw finite term evaluates below Γ₀, even without normality:
+
+```lean
+G0Term.eval_lt_gamma_zero (t : G0Term) : G0Term.eval t < Γ₀
+G0.eval_lt_gamma_zero (a : G0) : G0.eval a < Γ₀
+G0.evalOrderEmbeddingIio : G0 ↪o Set.Iio Γ₀
+```
+
+This proves semantic soundness and restricts the canonical embedding to the
+initial segment below Γ₀. The proof uses closure under Veblen application,
+finite right multiplication, and addition. Compiled examples, including
+noncanonical terms, are in
+[`OrdinalAnalysis/Examples/Gamma0Bounds.lean`](OrdinalAnalysis/Examples/Gamma0Bounds.lean).
+
+Completeness (surjectivity onto all ordinals below Γ₀) and the exact order-type
+theorem remain future work.
 
 ## Design
 
