@@ -31,7 +31,7 @@ example (o : Set.Iio (Γ₀ : Ordinal.{0})) :
 
 example : Γ₀ ∉ Set.range G0.eval := by
   rw [G0.range_eval_eq_Iio_gamma_zero]
-  exact lt_irrefl _
+  exact lt_irrefl (Γ₀ : Ordinal.{0})
 
 example : G0.ofOrdinal (ε₀ : Ordinal.{0}) (Ordinal.epsilon_zero_lt_gamma 0) =
     G0.epsilonZero := by
