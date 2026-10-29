@@ -65,6 +65,26 @@ E0.orderIsoIioEpsilonZero :
   E0 ≃o Set.Iio ε₀
 ```
 
+The Γ₀ implementation also satisfies this core interface:
+
+```lean
+G0.notationSystem : OrdinalNotationSystem G0
+
+G0.orderIsoIioGammaZero :
+  G0 ≃o Set.Iio Γ₀
+```
+
+`G0.notationSystem.eval` is the existing `G0.eval` and its bound is Γ₀.
+The isomorphism's forward map agrees with `G0.evalOrderEmbeddingIio`;
+its inverse agrees with `G0.ofOrdinal`. The adapter uses the existing
+order-correctness, soundness, and completeness theorems without modifying
+the generic interface.
+
+Compiled examples in `OrdinalAnalysis/Examples/Gamma0Generic.lean` exercise
+the generic range and order theorems, the order isomorphism, and its compatibility
+with the concrete maps. This core adapter does not supply a Γ₀ classifier;
+the classifier interface described below remains a separate contract.
+
 ## 3. Generic classification
 
 The generic classifier result is:
@@ -210,4 +230,4 @@ The generic API intentionally does **not** require:
 - an `ONote` or `NONote` bridge;
 - a particular comparison algorithm.
 
-That restraint is deliberate. Γ₀/Veblen notation is the first serious external test of this interface in v0.4. If Γ₀ forces a small adjustment, the generic layer should evolve from that concrete pressure rather than from speculation.
+That restraint is deliberate. Γ₀/Veblen notation now supplies a second concrete implementation of the core notation-system and exact-initial-segment interfaces without changing the generic layer. Classifiers and fundamental sequences remain additional structures, rather than requirements of the core interface.

@@ -113,8 +113,22 @@ trips. Consequently `G0.evalOrderEmbeddingIio` is surjective. Compiled examples
 are in
 [`OrdinalAnalysis/Examples/Gamma0Completeness.lean`](OrdinalAnalysis/Examples/Gamma0Completeness.lean).
 
-Packaging this bijective order embedding as an order isomorphism and adapting
-it to the generic notation-system API are the next steps.
+The Γ₀ development now satisfies the same core generic interface as ε₀:
+
+```lean
+G0.notationSystem : OrdinalNotationSystem G0
+G0.orderIsoIioGammaZero : G0 ≃o Set.Iio Γ₀
+```
+
+The order isomorphism is obtained from the existing generic exact-initial-segment
+theory. Its forward map agrees with `G0.evalOrderEmbeddingIio`, and its inverse
+agrees with `G0.ofOrdinal`. Thus the canonical notation order is exactly the
+ordinal initial segment below Γ₀. The generic API needed no changes.
+
+Compiled adapter, order, range, and inverse-compatibility examples are in
+[`OrdinalAnalysis/Examples/Gamma0Generic.lean`](OrdinalAnalysis/Examples/Gamma0Generic.lean).
+A Γ₀ classifier, fundamental sequences, and notation-level arithmetic remain
+future work.
 
 ## Design
 
@@ -221,7 +235,7 @@ Complete. The project now provides:
 
 ### v0.4 - Γ₀
 
-Develop finite Veblen normal forms, executable comparison, interpretation through mathlib's Veblen hierarchy, and an exact Γ₀ order-type theorem.
+The core notation system is implemented: finite Veblen normal forms, executable comparison, verified semantics, exact range, `G0 ≃o Set.Iio Γ₀`, and a generic `OrdinalNotationSystem` adapter. Γ₀ classification, fundamental sequences, and notation-level arithmetic remain future work.
 
 Longer-term work may move beyond mathlib's existing concrete notation systems toward collapsing-function and Bachmann-Howard style notations.
 
