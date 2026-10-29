@@ -24,7 +24,7 @@ deriving DecidableEq
 /-- Semantic meaning of the canonical shape view. -/
 def SuccessorView.Satisfies (a : G0) : SuccessorView → Prop
   | .zero => eval a = 0
-  | .succ predecessor => eval a = succ (eval predecessor)
+  | .succ predecessor => eval a = Order.succ (eval predecessor)
   | .limit => IsSuccLimit (eval a)
 
 /-- The computed shape together with its semantic certificate. -/
@@ -41,7 +41,7 @@ def successorViewData (a : G0) : SuccessorViewData a := by
       simpa only [hv, G0Term.SuccessorView.Satisfies] using hprop
   | succ predecessor =>
       have hp : G0Term.IsNormal predecessor ∧
-          G0Term.eval a.1 = succ (G0Term.eval predecessor) := by
+          G0Term.eval a.1 = Order.succ (G0Term.eval predecessor) := by
         simpa only [hv, G0Term.SuccessorView.Satisfies] using hprop
       exact ⟨.succ ⟨predecessor, hp.1⟩, hp.2⟩
   | limit =>
@@ -66,7 +66,7 @@ def predecessor? (a : G0) : Option G0 :=
 /-- Every returned predecessor has the required successor value. -/
 theorem predecessor?_sound {a predecessor : G0}
     (h : predecessor? a = some predecessor) :
-    eval a = succ (eval predecessor) := by
+    eval a = Order.succ (eval predecessor) := by
   unfold predecessor? at h
   cases hv : successorView a with
   | zero =>
@@ -83,7 +83,7 @@ theorem predecessor?_lt {a predecessor : G0}
     (h : predecessor? a = some predecessor) : predecessor < a := by
   apply (lt_iff_eval_lt predecessor a).2
   calc
-    eval predecessor < succ (eval predecessor) := lt_succ _
+    eval predecessor < Order.succ (eval predecessor) := lt_succ _
     _ = eval a := (predecessor?_sound h).symm
 
 end G0
