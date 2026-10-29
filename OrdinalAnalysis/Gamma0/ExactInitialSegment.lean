@@ -36,8 +36,10 @@ theorem orderIsoIioGammaZero_apply (a : G0) :
 theorem orderIsoIioGammaZero_symm_apply (o : Set.Iio (Γ₀ : Ordinal.{0})) :
     orderIsoIioGammaZero.symm o = ofOrdinal o.1 o.2 := by
   apply eval_injective
-  rw [eval_ofOrdinal]
-  exact congrArg Subtype.val (orderIsoIioGammaZero.apply_symm_apply o)
+  calc
+    eval (orderIsoIioGammaZero.symm o) = o.1 :=
+      congrArg Subtype.val (orderIsoIioGammaZero.apply_symm_apply o)
+    _ = eval (ofOrdinal o.1 o.2) := (eval_ofOrdinal o.1 o.2).symm
 
 end G0
 end OrdinalAnalysis
