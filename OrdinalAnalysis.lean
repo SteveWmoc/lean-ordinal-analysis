@@ -23,3 +23,6 @@ import OrdinalAnalysis.Examples.Gamma0Completeness
 import OrdinalAnalysis.Gamma0.NotationSystem
 import OrdinalAnalysis.Gamma0.ExactInitialSegment
 import OrdinalAnalysis.Examples.Gamma0Generic
+import OrdinalAnalysis.Gamma0.SuccessorView
+import OrdinalAnalysis.Gamma0.Predecessor
+import OrdinalAnalysis.Examples.Gamma0SuccessorView

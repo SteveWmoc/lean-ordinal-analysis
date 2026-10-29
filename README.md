@@ -127,8 +127,22 @@ ordinal initial segment below Γ₀. The generic API needed no changes.
 
 Compiled adapter, order, range, and inverse-compatibility examples are in
 [`OrdinalAnalysis/Examples/Gamma0Generic.lean`](OrdinalAnalysis/Examples/Gamma0Generic.lean).
-A Γ₀ classifier, fundamental sequences, and notation-level arithmetic remain
-future work.
+An executable shape classifier now distinguishes zero, successors, and limits:
+
+```lean
+G0.successorView : G0 → G0.SuccessorView
+G0.predecessor? : G0 → Option G0
+```
+
+The successor case returns a canonical predecessor with certified successor
+evaluation and strict order decrease. The limit case certifies
+`Order.IsSuccLimit (G0.eval a)`. Computation follows the rightmost tail and
+uses only finite syntax. Compiled examples cover finite terms, ω + 1, ω,
+ω · 2, and ε₀ in
+[`OrdinalAnalysis/Examples/Gamma0SuccessorView.lean`](OrdinalAnalysis/Examples/Gamma0SuccessorView.lean).
+
+Limit fundamental sequences and the full generic `OrdinalClassifier` adapter
+remain future work, as does notation-level arithmetic.
 
 ## Design
 
@@ -235,7 +249,7 @@ Complete. The project now provides:
 
 ### v0.4 - Γ₀
 
-The core notation system is implemented: finite Veblen normal forms, executable comparison, verified semantics, exact range, `G0 ≃o Set.Iio Γ₀`, and a generic `OrdinalNotationSystem` adapter. Γ₀ classification, fundamental sequences, and notation-level arithmetic remain future work.
+The core notation system is implemented: finite Veblen normal forms, executable comparison, verified semantics, exact range, `G0 ≃o Set.Iio Γ₀`, and a generic `OrdinalNotationSystem` adapter. Executable zero/successor/limit shape classification and certified successor predecessors are implemented. Fundamental sequences, the full generic classifier, and notation-level arithmetic remain future work.
 
 Longer-term work may move beyond mathlib's existing concrete notation systems toward collapsing-function and Bachmann-Howard style notations.
 
