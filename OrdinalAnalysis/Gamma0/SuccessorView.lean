@@ -40,7 +40,7 @@ def successorView : G0Term → SuccessorView
 /-- Correctness includes normality of every returned predecessor. -/
 def SuccessorView.Satisfies (t : G0Term) : SuccessorView → Prop
   | .zero => eval t = 0
-  | .succ predecessor => IsNormal predecessor ∧ eval t = succ (eval predecessor)
+  | .succ predecessor => IsNormal predecessor ∧ eval t = Order.succ (eval predecessor)
   | .limit => IsSuccLimit (eval t)
 
 private theorem isSuccLimit_veblen_of_index_pos
@@ -64,12 +64,12 @@ theorem terminalSuccessorView_satisfies (index arg : G0Term) (coeff : Nat) :
           cases coeff with
           | zero =>
               refine ⟨isNormal_zero, ?_⟩
-              simp [eval_veblen, Ordinal.veblen_zero_apply, Ordinal.succ_eq_add_one]
+              simp [eval_veblen, Ordinal.veblen_zero_apply, Order.succ_eq_add_one]
           | succ n =>
               constructor
               · simp [principal]
               · simp [eval_veblen, Ordinal.veblen_zero_apply,
-                  Ordinal.succ_eq_add_one, Nat.cast_add_one]
+                  Order.succ_eq_add_one, Nat.cast_add_one]
       | veblen argIndex argArg argCoeff argTail =>
           change IsSuccLimit (eval (.veblen .zero
             (.veblen argIndex argArg argCoeff argTail) coeff .zero))
@@ -111,7 +111,7 @@ theorem successorView_satisfies (t : G0Term) (hn : IsNormal t) :
           | succ predecessor =>
               have hp : IsNormal predecessor ∧
                   eval (.veblen tailIndex tailArg tailCoeff tailTail) =
-                    succ (eval predecessor) := by
+                    Order.succ (eval predecessor) := by
                 simpa only [hv, SuccessorView.Satisfies] using htail
               rw [successorView, hv, SuccessorView.Satisfies]
               constructor
@@ -127,7 +127,7 @@ theorem successorView_satisfies (t : G0Term) (hn : IsNormal t) :
                   have hbound := (hasSemanticTailBounds_of_normal _ hn).tail_lt_principal
                   simpa only [eval_principal] using hpredLt.trans hbound
               · rw [eval_veblen, eval_veblen, hp.2]
-                simp only [Ordinal.succ_eq_add_one, add_assoc]
+                simp only [Order.succ_eq_add_one, add_assoc]
 
 end G0Term
 end OrdinalAnalysis
