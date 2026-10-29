@@ -70,9 +70,9 @@ theorem predecessor?_sound {a predecessor : G0}
   unfold predecessor? at h
   cases hv : successorView a with
   | zero =>
-      simp only [hv, Option.noConfusion] at h
+      simp [hv] at h
   | limit =>
-      simp only [hv, Option.noConfusion] at h
+      simp [hv] at h
   | succ p =>
       have heq : p = predecessor := Option.some.inj (by simpa only [hv] using h)
       subst predecessor
