@@ -17,3 +17,6 @@ import OrdinalAnalysis.Gamma0.BoundedEmbedding
 import OrdinalAnalysis.Examples.Gamma0Bounds
 import OrdinalAnalysis.Gamma0.VeblenDecomposition
 import OrdinalAnalysis.Examples.Gamma0Decomposition
+import OrdinalAnalysis.Gamma0.SemanticNormalForm
+import OrdinalAnalysis.Gamma0.Completeness
+import OrdinalAnalysis.Examples.Gamma0Completeness
