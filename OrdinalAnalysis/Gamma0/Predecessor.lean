@@ -38,6 +38,7 @@ def successorViewData (a : G0) : SuccessorViewData a := by
   cases hv : G0Term.successorView a.1 with
   | zero =>
       refine ⟨.zero, ?_⟩
+      change G0Term.eval a.1 = 0
       simpa only [hv, G0Term.SuccessorView.Satisfies] using hprop
   | succ predecessor =>
       have hp : G0Term.IsNormal predecessor ∧
@@ -46,6 +47,7 @@ def successorViewData (a : G0) : SuccessorViewData a := by
       exact ⟨.succ ⟨predecessor, hp.1⟩, hp.2⟩
   | limit =>
       refine ⟨.limit, ?_⟩
+      change IsSuccLimit (G0Term.eval a.1)
       simpa only [hv, G0Term.SuccessorView.Satisfies] using hprop
 
 /-- Executable zero/successor/limit classification on canonical Γ₀ terms. -/
