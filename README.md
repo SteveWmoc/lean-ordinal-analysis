@@ -81,7 +81,7 @@ finite right multiplication, and addition. Compiled examples, including
 noncanonical terms, are in
 [`OrdinalAnalysis/Examples/Gamma0Bounds.lean`](OrdinalAnalysis/Examples/Gamma0Bounds.lean).
 
-The semantic completeness construction now has a certified decomposition step.
+The semantic completeness proof uses a certified decomposition step.
 For every nonzero `o < Γ₀`,
 `Gamma0Decomposition.decompose o hne hbound` provides `index`, `arg`,
 a stored natural `coeff`, and `tail` satisfying
@@ -93,12 +93,28 @@ Ordinal.veblen d.index d.arg * (d.coeff.succ : Ordinal) + d.tail = o
 All three recursive ordinal inputs are strictly smaller than `o`, and both
 the argument and remainder are smaller than the leading Veblen principal term.
 This uses inverse Veblen functions and the leading Cantor coefficient and
-remainder. It is a noncomputable semantic construction for the completeness
+remainder. It is a noncomputable semantic construction used by the completeness
 proof. Examples include the strict inverse-index bound at ε₀ and its failure
 at Γ₀.
 
-Completeness (surjectivity onto all ordinals below Γ₀) and the exact order-type
-theorem remain future work.
+Completeness is now proved by well-founded ordinal induction. Each recursive
+input in the decomposition has a canonical notation; semantic argument and
+tail bounds certify that the assembled node passes the executable checker.
+The exact range is:
+
+```lean
+G0.range_eval_eq_Iio_gamma_zero :
+  Set.range G0.eval = Set.Iio Γ₀
+```
+
+`G0.ofOrdinal o hbound` chooses the unique canonical notation for `o < Γ₀`.
+The simp lemmas `G0.eval_ofOrdinal` and `G0.ofOrdinal_eval` give both round
+trips. Consequently `G0.evalOrderEmbeddingIio` is surjective. Compiled examples
+are in
+[`OrdinalAnalysis/Examples/Gamma0Completeness.lean`](OrdinalAnalysis/Examples/Gamma0Completeness.lean).
+
+Packaging this bijective order embedding as an order isomorphism and adapting
+it to the generic notation-system API are the next steps.
 
 ## Design
 
