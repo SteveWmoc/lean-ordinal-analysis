@@ -52,7 +52,10 @@ example :
     orderIsoIioGammaZero.symm
       ⟨(ε₀ : Ordinal.{0}), Ordinal.epsilon_zero_lt_gamma 0⟩ = epsilonZero := by
   apply eval_injective
-  simp
+  exact (congrArg Subtype.val
+    (orderIsoIioGammaZero.apply_symm_apply
+      ⟨(ε₀ : Ordinal.{0}), Ordinal.epsilon_zero_lt_gamma 0⟩)).trans
+    eval_epsilonZero.symm
 
 end G0
 end OrdinalAnalysis
