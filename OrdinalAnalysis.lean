@@ -20,3 +20,6 @@ import OrdinalAnalysis.Examples.Gamma0Decomposition
 import OrdinalAnalysis.Gamma0.SemanticNormalForm
 import OrdinalAnalysis.Gamma0.Completeness
 import OrdinalAnalysis.Examples.Gamma0Completeness
+import OrdinalAnalysis.Gamma0.NotationSystem
+import OrdinalAnalysis.Gamma0.ExactInitialSegment
+import OrdinalAnalysis.Examples.Gamma0Generic
