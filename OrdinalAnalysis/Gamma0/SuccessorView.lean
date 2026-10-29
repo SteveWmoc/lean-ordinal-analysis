@@ -126,7 +126,7 @@ theorem successorView_satisfies (t : G0Term) (hn : IsNormal t) :
                     exact lt_succ _
                   have hbound := (hasSemanticTailBounds_of_normal _ hn).tail_lt_principal
                   simpa only [eval_principal] using hpredLt.trans hbound
-              · rw [eval_veblen, eval_veblen, hp.2]
+              · rw [eval_veblen, hp.2, eval_veblen]
                 simp only [Order.succ_eq_add_one, add_assoc]
 
 end G0Term
