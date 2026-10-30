@@ -30,3 +30,6 @@ import OrdinalAnalysis.Gamma0.FiniteBlocks
 import OrdinalAnalysis.Gamma0.LimitSequence
 import OrdinalAnalysis.Gamma0.OmegaMultipleSequence
 import OrdinalAnalysis.Examples.Gamma0OmegaSequence
+import OrdinalAnalysis.Gamma0.VeblenApplication
+import OrdinalAnalysis.Gamma0.VeblenLimitSequence
+import OrdinalAnalysis.Examples.Gamma0VeblenSequence

@@ -161,8 +161,30 @@ limit contract. `G0.omegaMultipleLimitSequenceData` supplies the first family.
 Native examples are in
 [`OrdinalAnalysis/Examples/Gamma0OmegaSequence.lean`](OrdinalAnalysis/Examples/Gamma0OmegaSequence.lean).
 
-General Veblen fundamental sequences, the full generic `OrdinalClassifier`
-adapter, and general notation-level arithmetic remain future work.
+Canonical Veblen application is now executable:
+
+```lean
+G0.veblen : G0 → G0 → G0
+G0.eval_veblen (index arg : G0) :
+  G0.eval (G0.veblen index arg) =
+    Ordinal.veblen (G0.eval index) (G0.eval arg)
+```
+
+The constructor uses raw comparison to choose a normal principal term or
+collapse a redundant fixed-point presentation. For example,
+`G0.veblen G0.zero G0.epsilonZero = G0.epsilonZero`.
+
+For any certified argument sequence `data : G0.LimitSequenceData a`,
+`data.veblenRight index` gives a certified sequence at `G0.veblen index a`.
+This implements the fixed-index, limit-argument Veblen rule and preserves
+strict increase, bounds, cofinality, and supremum convergence. Applying it to
+the sequence at ω yields sequences at ω^ω and φ₁(ω); it can also be iterated.
+Native and semantic examples are in
+[`OrdinalAnalysis/Examples/Gamma0VeblenSequence.lean`](OrdinalAnalysis/Examples/Gamma0VeblenSequence.lean).
+
+Successor-argument and limit-index Veblen rules, assembly of general sums,
+the total generic `OrdinalClassifier` adapter, and general notation-level
+arithmetic remain future work.
 
 ## Design
 
@@ -269,7 +291,7 @@ Complete. The project now provides:
 
 ### v0.4 - Γ₀
 
-The core notation system is implemented: finite Veblen normal forms, executable comparison, verified semantics, exact range, `G0 ≃o Set.Iio Γ₀`, and a generic `OrdinalNotationSystem` adapter. Executable zero/successor/limit shape classification and certified successor predecessors are implemented. Certified executable fundamental sequences for positive finite multiples of ω are implemented. General Veblen sequences, the full generic classifier, and general notation-level arithmetic remain future work.
+The core notation system is implemented: finite Veblen normal forms, executable comparison, verified semantics, exact range, `G0 ≃o Set.Iio Γ₀`, and a generic `OrdinalNotationSystem` adapter. Executable zero/successor/limit shape classification and certified successor predecessors are implemented. Certified executable fundamental sequences for positive finite multiples of ω are implemented. Canonical Veblen application and fixed-index, limit-argument sequence lifting are implemented. The remaining Veblen sequence rules, general sum assembly, the full generic classifier, and general notation-level arithmetic remain future work.
 
 Longer-term work may move beyond mathlib's existing concrete notation systems toward collapsing-function and Bachmann-Howard style notations.
 
