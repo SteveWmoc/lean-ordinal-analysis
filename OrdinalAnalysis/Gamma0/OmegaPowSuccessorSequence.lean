@@ -38,8 +38,8 @@ theorem omegaPowSuccSequence_lt {a b : G0}
     omegaPowSuccSequence b n < veblen zero a := by
   apply (lt_iff_eval_lt _ _).2
   rw [eval_omegaPowSuccSequence, eval_veblen, eval_zero, Ordinal.veblen_zero_apply]
-  exact Ordinal.omega0_opow_mul_nat_lt
-    ((lt_iff_eval_lt b a).1 (predecessor?_lt hpred)) n
+  exact Ordinal.opow_mul_lt_opow (Ordinal.natCast_lt_omega0 n)
+    ((lt_iff_eval_lt b a).1 (predecessor?_lt hpred))
 
 theorem omegaPowSuccSequence_cofinal {a b : G0}
     (hpred : predecessor? a = some b) (α : Ordinal.{0})
