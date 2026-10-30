@@ -26,3 +26,7 @@ import OrdinalAnalysis.Examples.Gamma0Generic
 import OrdinalAnalysis.Gamma0.SuccessorView
 import OrdinalAnalysis.Gamma0.Predecessor
 import OrdinalAnalysis.Examples.Gamma0SuccessorView
+import OrdinalAnalysis.Gamma0.FiniteBlocks
+import OrdinalAnalysis.Gamma0.LimitSequence
+import OrdinalAnalysis.Gamma0.OmegaMultipleSequence
+import OrdinalAnalysis.Examples.Gamma0OmegaSequence
