@@ -65,12 +65,20 @@ def omegaPowSuccLimitSequenceData {a b : G0}
   lt := omegaPowSuccSequence_lt hpred
   cofinal := omegaPowSuccSequence_cofinal hpred
 
+/-- The certificate retains the executable successor-exponent sequence. -/
+@[simp]
+theorem omegaPowSuccLimitSequenceData_seq {a b : G0}
+    (hpred : predecessor? a = some b) (n : Nat) :
+    (omegaPowSuccLimitSequenceData hpred).seq n = omegaPowSuccSequence b n :=
+  rfl
+
 /-- Supremum convergence of the successor-exponent sequence. -/
 theorem omegaPowSuccSequence_iSup_eval {a b : G0}
     (hpred : predecessor? a = some b) :
     (⨆ n, eval (omegaPowSuccSequence b n)) = ω ^ eval a := by
   have h := (omegaPowSuccLimitSequenceData hpred).iSup_eval
-  simpa only [eval_veblen, eval_zero, Ordinal.veblen_zero_apply] using h
+  simpa only [omegaPowSuccLimitSequenceData_seq, eval_veblen, eval_zero,
+    Ordinal.veblen_zero_apply] using h
 
 end G0
 end OrdinalAnalysis
