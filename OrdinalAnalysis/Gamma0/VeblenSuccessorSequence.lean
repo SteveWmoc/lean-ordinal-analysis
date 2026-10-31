@@ -72,7 +72,7 @@ theorem veblenSuccSequence_seed_lt {index lower : G0}
             (Ordinal.veblen (eval index) (eval beta)) := hfixed.symm
       _ < _ := Ordinal.veblen_right_strictMono (eval lower) (lt_succ _)
   exact (isSuccLimit_veblen_of_arg_pos (eval lower)
-    (lt_of_le_of_lt (zero_le _) (lt_succ _))).succ_lt hlt
+    (lt_of_le_of_lt zero_le (lt_succ _))).succ_lt hlt
 
 theorem veblenSuccSequence_strictMono {index lower : G0}
     (hi : predecessor? index = some lower) (beta : G0) :
@@ -112,7 +112,7 @@ def veblenSuccLimitSequenceData {index lower arg beta : G0}
   isSuccLimit := by
     rw [eval_veblen]
     exact isSuccLimit_veblen_of_index_pos (eval arg)
-      (lt_of_le_of_lt (zero_le _) ((lt_iff_eval_lt _ _).1 (predecessor?_lt hi)))
+      (lt_of_le_of_lt zero_le ((lt_iff_eval_lt _ _).1 (predecessor?_lt hi)))
   strictMono := veblenSuccSequence_strictMono hi beta
   lt := veblenSuccSequence_lt hi ha
   cofinal := veblenSuccSequence_cofinal hi ha
