@@ -60,10 +60,10 @@ theorem successor_correct (t : G0Term) (hn : IsNormal t) :
               · simp [successor, principal]
               · simp [successor, eval_veblen, Ordinal.veblen_zero_apply, ht,
                   Order.succ_eq_add_one, Nat.cast_add_one]
-          | veblen ai aa ac at =>
-              have hl := terminalSuccessorView_satisfies .zero (.veblen ai aa ac at) 0
+          | veblen ai aa ac argTail =>
+              have hl := terminalSuccessorView_satisfies .zero (.veblen ai aa ac argTail) 0
               have hlimit : IsSuccLimit (Ordinal.veblen (eval .zero)
-                  (eval (.veblen ai aa ac at))) := by
+                  (eval (.veblen ai aa ac argTail))) := by
                 simpa [terminalSuccessorView, SuccessorView.Satisfies, eval_veblen]
                   using hl
               exact successor_node_correct hn hlimit (ihTail hn.tail)
