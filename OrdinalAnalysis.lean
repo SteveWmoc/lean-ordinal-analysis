@@ -39,3 +39,6 @@ import OrdinalAnalysis.Examples.Gamma0OmegaPowSuccessor
 import OrdinalAnalysis.Gamma0.VeblenIteration
 import OrdinalAnalysis.Gamma0.VeblenZeroSequence
 import OrdinalAnalysis.Examples.Gamma0VeblenZeroSequence
+import OrdinalAnalysis.Gamma0.Successor
+import OrdinalAnalysis.Gamma0.VeblenSuccessorSequence
+import OrdinalAnalysis.Examples.Gamma0VeblenSuccessorSequence
