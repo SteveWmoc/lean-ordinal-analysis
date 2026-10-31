@@ -26,7 +26,7 @@ def veblenZeroSequence (lower : G0) : Nat → G0 :=
 theorem eval_veblenZeroSequence (lower : G0) (n : Nat) :
     eval (veblenZeroSequence lower n) =
       (Ordinal.veblen (eval lower))^[n] 0 := by
-  simpa only [eval_zero] using eval_veblenIterate lower zero n
+  simpa only [veblenZeroSequence, eval_zero] using eval_veblenIterate lower zero n
 
 /-- The zero-argument value at a successor index is a next-fixed-point value. -/
 theorem eval_veblen_zero_eq_nfp_of_predecessor {index lower : G0}
