@@ -88,8 +88,11 @@ theorem veblenSuccSequence_lt {index lower arg beta : G0}
   rw [eval_veblen_succ_eq_nfp_of_predecessors hi ha]
   change eval (veblenIterate lower (successor (veblen index beta)) n) < _
   rw [eval_veblenIterate]
-  exact Ordinal.iterate_lt_nfp (Ordinal.veblen_right_strictMono (eval lower))
-    ((lt_iff_eval_lt _ _).1 (veblenSuccSequence_seed_lt hi beta)) n
+  have hseed : eval (successor (veblen index beta)) <
+      Ordinal.veblen (eval lower) (eval (successor (veblen index beta))) := by
+    simpa only [eval_veblen] using
+      (lt_iff_eval_lt _ _).1 (veblenSuccSequence_seed_lt hi beta)
+  exact Ordinal.iterate_lt_nfp (Ordinal.veblen_right_strictMono (eval lower)) hseed n
 
 theorem veblenSuccSequence_cofinal {index lower arg beta : G0}
     (hi : predecessor? index = some lower)
